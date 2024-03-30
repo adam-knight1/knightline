@@ -1,4 +1,4 @@
-package org.example;
+package org.knightline;
 
 public class Main {
     public static void main(String[] args) {
