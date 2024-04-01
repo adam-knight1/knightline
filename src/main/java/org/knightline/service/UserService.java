@@ -1,6 +1,7 @@
 package org.knightline.service;
 
 import org.knightline.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserService {
 
@@ -9,7 +10,7 @@ public class UserService {
 
     public UserService (UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-
+        this.passwordEncoder = passwordEncoder;
     }
 
 }
