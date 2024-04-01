@@ -39,7 +39,15 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @PrePersist
+
+    public User(){}
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+        @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
@@ -50,4 +58,15 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 
-}
+    public UUID getUserId() { return userId; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setName(String name) { this.name = name; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
+
+
+    }

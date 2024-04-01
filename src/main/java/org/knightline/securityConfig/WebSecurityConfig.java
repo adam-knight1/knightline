@@ -1,4 +1,4 @@
-package org.knightline.config;
+package org.knightline.securityConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +26,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic(); //may alter this to formLogin depending on how I ultimately set it up
-
     }
 }
