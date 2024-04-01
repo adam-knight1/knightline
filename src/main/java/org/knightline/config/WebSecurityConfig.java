@@ -1,11 +1,15 @@
 package org.knightline.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-public class WebSecurityConfig {
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Using bcrypt for password encoding
     @Bean
@@ -18,7 +22,10 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/users/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic(); //may alter this to formLogin depending on how I ultimately set it up
 
     }
-
 }
