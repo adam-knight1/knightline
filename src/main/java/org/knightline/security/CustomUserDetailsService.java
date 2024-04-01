@@ -1,4 +1,4 @@
-package org.knightline.securityConfig;
+package org.knightline.security;
 import org.knightline.repository.UserRepository;
 import org.knightline.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
