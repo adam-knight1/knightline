@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 //entity for storing user data in postgres
+//todo - possibly try out lombok to get rid of all the boiler-plate annotation stuff
 @Entity
 @Table(name = "users")
 public class User {
@@ -31,7 +32,7 @@ public class User {
 
     @Column(nullable = false)
     @NotEmpty(message = "Password is required")
-    private String password; // This should be encoded
+    private String password; // This is enconded via BCrypt
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
