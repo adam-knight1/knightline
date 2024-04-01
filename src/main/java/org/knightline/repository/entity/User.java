@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
 //entity for storing user data in postgres
 @Entity
 @Table(name = "users")
@@ -25,7 +24,7 @@ public class User {
     @NotEmpty(message = "Name is required")
     private String name;
 
-    @Column(nullable = false, unique = true, length = 150)
+    @Column(nullable = false, unique = true, length = 150) //unique = true to prevent duplicate emails
     @NotEmpty(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;

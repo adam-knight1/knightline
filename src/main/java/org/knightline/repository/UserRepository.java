@@ -1,5 +1,7 @@
 package org.knightline.repository;
-@EnableScan
-public interface UserRepository extends CrudRepository(UserRecord,String) {
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository()
 
 }
