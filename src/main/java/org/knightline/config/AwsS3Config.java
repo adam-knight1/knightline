@@ -10,21 +10,12 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 public class AwsS3Config {
-
-    @Value("${aws.accessKeyId}")
-    private String accessKeyId;
-
-    @Value("${aws.secretAccessKey}")
-    private String secretAccessKey;
-
     @Value("${aws.region}")
     private String region;
 
     @Bean
-    public S3Client s3Client() {
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
+    public S3Client s3Client() { //I removed the AWSCredentials aspect as I'm sourcing with Aws_config
         return S3Client.builder()
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 .region(Region.of(region))
                 .build();
     }

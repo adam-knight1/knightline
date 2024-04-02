@@ -21,7 +21,7 @@ public class PhotoController {
         //principal variable should work to determine logged in user, contrary to local storage.
 
         try {
-            String photoUrl = photoService.uploadPhoto(file, prinicipal.getName);
+            String photoUrl = photoService.uploadPhoto(file, principal.getName());
             return ResponseEntity.ok().body(Map.of("url", photoUrl));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
