@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-//entity for storing user data in postgres
+//entity for storing user data in postgres, including photo roll
 //todo - possibly try out lombok to get rid of all the boiler-plate annotation stuff
 @Entity
 @Table(name = "users")
@@ -40,7 +40,6 @@ public class User {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
 
     public User(){}
 
