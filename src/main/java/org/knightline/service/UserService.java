@@ -20,6 +20,9 @@ public class UserService {
     public User createUser (User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
 
+    public User findUserByUsername(String username){
+        userRepository.
     }
 }
