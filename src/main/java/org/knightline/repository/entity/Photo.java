@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 //photo entity class used to interact with AWS S3 photo bucket for upload and accessing photos
 @Entity
+@Table(name = "photos")
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +22,11 @@ public class Photo {
 
     public Photo(){}
 
-    public Photo(String title, String description, String s3ObjectKey,User user) {
+    public Photo(String title, String description, String s3ObjectKey,String url, User user) {
         this.title = title;
         this.description = description;
         this.s3ObjectKey = s3ObjectKey;
+        this.url = url;
         this.uploadTime = LocalDateTime.now();
         this.user = user;
     }

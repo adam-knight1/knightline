@@ -4,13 +4,17 @@ import org.knightline.repository.PhotoRepository;
 import org.knightline.repository.entity.Photo;
 import org.knightline.repository.entity.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+@Service
 public class PhotoService {
     private final S3Client s3Client;
     private final PhotoRepository photoRepository;
@@ -24,7 +28,7 @@ public class PhotoService {
     }
 
     public String uploadPhoto(MultipartFile file, String username) throws IOException {
-        String bucketName = "knightlinePhotos";
+        String bucketName = "knightlinephotos";
         String s3Key = generateUniqueKey(file.getOriginalFilename(), username);
         String region = "us-east-1";
 
@@ -48,7 +52,7 @@ public class PhotoService {
         photo.setTitle("Some title"); // set by user
         photo.setDescription("Some description"); // set by user
         photo.setUrl(photoUrl); // The URL generated after upload
-        photo.setS3ObjectKey(s3Key); // The key you used to store the photo in S3
+        photo.setS3ObjectKey(s3Key); // The key used to store the photo in S3
         photo.setUser(user); //user who uploaded the photo
         photo.setUploadTime(LocalDateTime.now()); // upload time
 
@@ -58,10 +62,13 @@ public class PhotoService {
 
     }
 
-
     private String generateUniqueKey(String originalFilename, String username){
-        return "";
+        String fileExtension = StringUtils.getFilenameExtension(originalFilename);
+        String baseName = StringUtils.stripFilenameExtension(originalFilename);
+
+        //using username and time for uniqueness
+
+        return String.format("%s_%s_%s.%s", username, baseName, UUID.randomUUID().toString(), fileExtension);
     }
-
-
 }
+
