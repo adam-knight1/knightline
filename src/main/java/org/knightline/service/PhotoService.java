@@ -36,6 +36,7 @@ public class PhotoService {
                 .bucket(bucketName)
                 .key(s3Key)
                 .build();
+
         //uploading file to S3
         s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
