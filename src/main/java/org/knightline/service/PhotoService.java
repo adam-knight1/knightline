@@ -27,22 +27,23 @@ public class PhotoService {
         this.userService = userService;
     }
 
-    public String uploadPhoto(MultipartFile file, String username) throws IOException {
+    public String uploadPhoto(MultipartFile file, String email) throws IOException {
         String bucketName = "knightlinephotos";
-        String s3Key = generateUniqueKey(file.getOriginalFilename(), username);
+        String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
         String region = "us-east-1";
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder() //creating the putObject Request
                 .bucket(bucketName)
                 .key(s3Key)
                 .build();
+
         //uploading file to S3
         s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
         // Constructing the URL for the uploaded file
         String photoUrl = String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, s3Key);
 
-        User user = userService.findUserByUsername(username);
+        User user = userService.findUserByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

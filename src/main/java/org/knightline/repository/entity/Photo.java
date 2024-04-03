@@ -31,6 +31,7 @@ public class Photo {
         this.user = user;
     }
 
+    //getters and setters below
     public Long getId() {
         return id;
     }
