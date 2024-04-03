@@ -17,6 +17,7 @@ dependencies {
     //implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'software.amazon.awssdk:s3:2.25.21'  //adding to use S3 for photo storage, latest version
 
     runtimeOnly 'org.postgresql:postgresql'
 

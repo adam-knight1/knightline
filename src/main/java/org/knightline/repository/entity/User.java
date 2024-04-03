@@ -7,9 +7,10 @@ import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-//entity for storing user data in postgres
+//entity for storing user data in postgres, including photo roll
 //todo - possibly try out lombok to get rid of all the boiler-plate annotation stuff
 @Entity
 @Table(name = "users")
@@ -40,7 +41,6 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-
     public User(){}
 
     public User(String name, String email, String password) {
@@ -59,6 +59,9 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 
+    @OneToMany(mappedBy = "user") // This establishes relationship between user and their ability to have many photos
+    private List<Photo> photos;
+
     public UUID getUserId() { return userId; }
     public String getName() { return name; }
     public String getEmail() { return email; }
@@ -68,5 +71,8 @@ public class User {
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
+    public List<Photo> getPhotos() { return photos; }
+    public void setPhotos(List<Photo> photos) { this.photos = photos; }
+
 
 }
