@@ -16,5 +16,11 @@ public class FamilyUpdate {
     private Long Id;
     @Column(nullable = false)
     private String body;
-    private String author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+
+
 }
