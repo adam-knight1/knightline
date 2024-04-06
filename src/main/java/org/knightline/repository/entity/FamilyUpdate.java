@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public class FamilyUpdate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @Column(nullable = false)
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) //lazy fetch will only get user from DB if needed in code
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -26,11 +26,11 @@ public class FamilyUpdate {
     //getters + setters below
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        id = id;
     }
 
     public String getBody() {
