@@ -1,5 +1,7 @@
 package org.knightline.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -18,6 +20,7 @@ public class Photo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference //added to overcome infinite recursion with photos/user pending dto implementation
     private User user; //keeping many to one relationship (one user can have many photos)
 
     public Photo(){}

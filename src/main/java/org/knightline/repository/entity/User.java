@@ -1,5 +1,6 @@
 package org.knightline.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import javax.validation.constraints.Email;
@@ -60,6 +61,7 @@ public class User {
     }
 
     @OneToMany(mappedBy = "user") // This establishes relationship between user and their ability to have many photos
+    @JsonManagedReference //added to overcome infinite recursion with photos/user pending dto implementation
     private List<Photo> photos;
 
     public UUID getUserId() { return userId; }
