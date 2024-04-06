@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class FamilyUpdateService {
     private final FamilyUpdateRepository familyUpdateRepository;
@@ -30,6 +31,19 @@ public class FamilyUpdateService {
         update.setCreatedAt(LocalDateTime.now());
         return familyUpdateRepository.save(update);
     }
+
+    /**
+     * Retrieves all family updates from the database, ordered by creation time descending.
+     * @return A list of FamilyUpdate entities.
+     */
+
+    @Transactional(readOnly = true)
+    public List<FamilyUpdate> getAllUpdates() {
+        return familyUpdateRepository.findAllByOrderByCreatedAtDesc();
+        =
+    }
+
+
 
 
 
