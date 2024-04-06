@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-/**Controller class that defines various endpoints related to creating, editing, and deleting
- * family notification updates
+/**Controller class that defines various endpoints related to creating, editing, and deleting family notification updates
  */
 @RestController
 @RequestMapping("/updates")
