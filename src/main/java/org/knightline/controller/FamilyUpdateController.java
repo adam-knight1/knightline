@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
+import java.util.List;
 
 /**Controller class that defines various endpoints related to creating, editing, and deleting
  * family notification updates
@@ -32,6 +34,10 @@ public class FamilyUpdateController {
         User user = userService.findUserByEmail(principal.getName());
         FamilyUpdate update = familyUpdateService.postUpdate(user,familyUpdateDto.getMessage());
         return new ResponseEntity<>(update, HttpStatus.CREATED);
+    }
 
+    @GetMapping
+    public List<FamilyUpdate> getAllUpdates() {
+        return familyUpdateService.getAllUpdates();
     }
 }
