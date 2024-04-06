@@ -16,7 +16,8 @@ public class FamilyUpdate {
     @Column(nullable = false)
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY) //lazy fetch will only get user from DB if needed in code
+    //@ManyToOne(fetch = FetchType.LAZY) //lazy fetch will only get user from DB if needed in code
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
