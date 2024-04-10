@@ -47,7 +47,7 @@ public class PhotoServiceTest {
      */
     @Test
     public void uploadPhoto_ValidPhoto_UploadSuccess() throws IOException {
-        // Mocking the multipart file
+        // Mocking the multipart file creation (the photo)
         MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", "test image content".getBytes());
         User mockUser = new User();
         mockUser.setEmail("user@test.com");
@@ -59,7 +59,7 @@ public class PhotoServiceTest {
         // Mocking repository save
         when(photoRepository.save(any(Photo.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // Calling service method
+        // Calling service method to upload photo
         String resultUrl = photoService.uploadPhoto(file, "user@test");
 
         //Assertions and verifications
@@ -72,9 +72,13 @@ public class PhotoServiceTest {
 
     @Test
     public void uploadPhoto_UserNotFound_ThrowsException() {
+        //Mocking multipart file (the picture)
         MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", "test image content".getBytes());
+
+        //Calling userService method with fake user
         when(userService.findUserByEmail("user@test.com")).thenReturn(null);
 
+        //Checking if exception is thrown
         assertThrows(UsernameNotFoundException.class, () -> {
             photoService.uploadPhoto(file, "user@test.com");
         });

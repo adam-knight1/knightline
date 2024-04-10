@@ -3,8 +3,9 @@ package org.knightline.repository.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-/** this is the entity that will be used for the notification structure
- * to be displayed in the family updates notification module after user login
+/** This is the entity that will be used for the notification structure
+ * to be displayed in the family updates notification module after user login.
+ * It is essentially a community message board where members can contribute to after logging in
  */
 
 @Entity
