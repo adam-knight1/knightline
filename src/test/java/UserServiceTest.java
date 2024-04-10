@@ -17,8 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+/** Test class for verifying UserService methods"
+ * Includes tests for verifying user authenticity by email
+ * Mocks UserRepository to query and save emails
+ */
+
 @SpringBootTest(classes = KnightlineApplication.class)
-@ExtendWith(SpringExtension.class)  // This is actually not needed with @SpringBootTest as it already includes it I think
+@ExtendWith(SpringExtension.class)
 public class UserServiceTest {
 
     @MockBean
@@ -26,6 +31,10 @@ public class UserServiceTest {
 
     @Autowired  // Changed from @InjectMocks to let Spring handle the injection
     private UserService userService;
+
+    /** Test to verify if user exists in DB, searching by email
+     *  Test passes if user is found in postgres table
+     */
 
     @Test
     public void findUserByEmail_UserFound() {
@@ -39,6 +48,11 @@ public class UserServiceTest {
         assertNotNull(foundUser);
         assertEquals(email, foundUser.getEmail());
     }
+
+    /**Test to determine if user exists by email
+     * Uses fake user data to verify integrity of DB user table
+     * Returns true if fake user not found.
+     */
 
     @Test
     public void findUserByEmail_UserNotFound() {
