@@ -72,9 +72,13 @@ public class PhotoServiceTest {
 
     @Test
     public void uploadPhoto_UserNotFound_ThrowsException() {
+        //Mocking multipart file (the picture)
         MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", "test image content".getBytes());
+
+        //calling userService method with fake user
         when(userService.findUserByEmail("user@test.com")).thenReturn(null);
 
+        //checking if exception is thrown
         assertThrows(UsernameNotFoundException.class, () -> {
             photoService.uploadPhoto(file, "user@test.com");
         });
