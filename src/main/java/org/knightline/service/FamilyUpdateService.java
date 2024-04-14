@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /** Service class containing business logic for posting to notifications board
- * Includes functionality for retrieving all updates
+ * Includes functionality for posting and retrieving all updates
+ * These will be displayed on the family message board after a user login
  */
 @Service
 public class FamilyUpdateService {
