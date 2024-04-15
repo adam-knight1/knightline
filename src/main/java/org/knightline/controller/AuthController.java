@@ -11,6 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+/** Controller class that defines the endpoints needed for login using spring security"
+ *
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -23,7 +26,11 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // User login endpoint
+    /** User login endpoin
+     *
+     * @param loginRequest
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
