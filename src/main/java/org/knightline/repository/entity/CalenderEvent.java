@@ -9,7 +9,9 @@ public class CalenderEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @ManyToOne(fetch = FetchType.EAGER) //using eager fetch pending switch to dtos, same as FamilyUpdate
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
 
