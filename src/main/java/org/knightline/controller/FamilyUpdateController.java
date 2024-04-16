@@ -28,12 +28,28 @@ public class FamilyUpdateController {
         this.userService = userService;
     }
 
+    /** Method to post updates to the family messageboard
+     *
+     * @param familyUpdateDto
+     * @param principal
+     * @return the update and a 201 if successful
+     */
+
+    //todo - change to use FamilyUpdateDto
+
     @PostMapping("/post-update")
     public ResponseEntity<FamilyUpdate> postUpdate(@RequestBody FamilyUpdateDto familyUpdateDto, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
         FamilyUpdate update = familyUpdateService.postUpdate(user,familyUpdateDto.getMessage());
         return new ResponseEntity<>(update, HttpStatus.CREATED);
     }
+
+    /** Retrieves all messages posted on the update board, to be displayed on the front end
+     *
+     * @return all updates
+     */
+
+    //todo - decide how many I want to render once I start hacking the front end together
 
     @GetMapping("/retrieve-all")
     public List<FamilyUpdate> getAllUpdates() {
