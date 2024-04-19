@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/** This class interacts with the spring security framework.
+ * It uses userRepository methods to fetch users during the login process.
+ */
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
