@@ -65,4 +65,8 @@ public class CalendarEvent {
     public ZonedDateTime getEventTime() {
         return eventTime;
     }
+
+    public void setEventTime(ZonedDateTime eventTime) {
+        this.eventTime = eventTime;
+    }
 }
