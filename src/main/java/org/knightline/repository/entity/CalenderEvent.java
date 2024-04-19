@@ -16,7 +16,7 @@ public class CalenderEvent {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String description;
     @Column(nullable = false)
     private LocalDateTime createdAt;
