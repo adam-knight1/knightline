@@ -1,7 +1,6 @@
 package org.knightline.repository.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 /** This class defines the calendar event entity which interacts with the calendar event postgres table.
@@ -10,8 +9,8 @@ import java.time.ZonedDateTime;
  */
 
 @Entity
-@Table(name="calender_events")
-public class CalenderEvent {
+@Table(name="calendar_events")
+public class CalendarEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +19,7 @@ public class CalenderEvent {
     @Column(nullable = false, length = 1000)
     private String description;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
     @Column(nullable = false)
     private ZonedDateTime eventTime;
     @ManyToOne(fetch = FetchType.EAGER) //using eager fetch pending switch to dtos, same as FamilyUpdate, lazy causing issues
@@ -51,28 +50,19 @@ public class CalenderEvent {
         this.description = description;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public ZonedDateTime getEventTime(ZonedDateTime eventTime){
-        return eventTime;
-    }
-
-    public void setEventTime(ZonedDateTime eventTime) {
-        this.eventTime = eventTime;
-
-
-    }
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public ZonedDateTime getEventTime() {
+        return eventTime;
     }
 }
