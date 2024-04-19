@@ -1,4 +1,5 @@
 package org.knightline.security;
+
 import org.knightline.repository.UserRepository;
 import org.knightline.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-/** This class interacts with the spring security framework.
+/**
+ * This class interacts with the spring security framework.
  * It uses userRepository methods to fetch users during the login process.
  */
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -29,8 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService{
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found with email: " + username));
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
         //todo - Refactor the User DTO to remove this ugly location path
 
     }
-    }
+}
