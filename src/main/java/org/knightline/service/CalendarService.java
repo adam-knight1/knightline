@@ -5,6 +5,7 @@ import org.knightline.repository.entity.CalendarEvent;
 import org.knightline.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,10 +44,12 @@ public class CalendarService {
 
         CalendarEvent savedEvent = calendarEventRepository.save(calendarEvent);
 
-        if (savedEvent == null) {
-            throw new RuntimeException("Failed to save the calendar event");
+        try {
+            return calendarEventRepository.save(calendarEvent);
+        } catch (DataIntegrityViolationException ex) {
+            throw new RuntimeException("Failed to save the calendar event due to data integrity issues.", ex);
         }
-        return savedEvent;
+
 
     }
 }
