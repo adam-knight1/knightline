@@ -12,10 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/** This config class is part of the spring security framework
+ * It defines the parameters of the secure login process, such as what URLs/endpoints are permitted before login
+ * It also contains password encoder bean, powered by BCrypt
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
