@@ -1,14 +1,14 @@
 package org.knightline.dto;
 
+import java.time.LocalDateTime;
+
 public class FamilyUpdateDto {
+    private String message;
+    private UserDto user;
+    private LocalDateTime createdAt;
 
-    private String Message;
 
-    public String getMessage() {
-        return Message;
-    }
 
-    public void setMessage(String message) {
-        Message = message;
-    }
+
+
 }
