@@ -29,17 +29,19 @@ public class CalendarController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CalendarEvent> createEvent(@RequestBody CalendarEvent calendarEvent, Principal principal) {
+    public ResponseEntity<CalendarEventDto> createEvent(@RequestBody CalendarEvent calendarEvent, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
-        UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail())
+        UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail());
 
         CalendarEvent newEvent = calendarService.createCalendarEvent(user, calendarEvent.getTitle(), calendarEvent.getDescription(), calendarEvent.getEventTime());
 
         CalendarEventDto calendarEventDto = new CalendarEventDto();
                 calendarEventDto.setEventTime(newEvent.getEventTime());
                 calendarEventDto.setDescription(newEvent.getDescription());
-                calendarEventDto.setUser(user);
+                calendarEventDto.setUser(userDto);
+                calendarEventDto.setTitle(newEvent.getTitle());
+                calendarEventDto.setId(newEvent.getId());
 
-        return ResponseEntity.ok(newEvent);
+        return ResponseEntity.ok(calendarEventDto);
     }
 }
