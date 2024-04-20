@@ -26,7 +26,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /** User login endpoin
+    /** User login endpoint
      *
      * @param loginRequest
      * @return

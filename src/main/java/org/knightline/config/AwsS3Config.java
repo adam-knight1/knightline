@@ -8,7 +8,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
-/** This config class contains the s3client bean, which allows for communication with S3 for photo storage
+/** This config class contains the s3client bean, which facilitates communication with S3 for photo storage
  *
  */
 
