@@ -46,9 +46,9 @@ public class FamilyUpdateController {
         FamilyUpdateDto response = new FamilyUpdateDto();
         response.setBody(familyUpdateDto.getBody());
         response.setUser(new UserDto(user.getUserId(),user.getName(), user.getEmail()));
+        response.setCreatedAt(familyUpdateDto.getCreatedAt());
 
-
-        return new ResponseEntity<>(, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /** Retrieves all messages posted on the update board, to be displayed on the front end
