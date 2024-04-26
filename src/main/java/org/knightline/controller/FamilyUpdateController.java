@@ -41,7 +41,7 @@ public class FamilyUpdateController {
     @PostMapping("/post-update")
     public ResponseEntity<FamilyUpdateDto> postUpdate(@RequestBody FamilyUpdateDto familyUpdateDto, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
-        FamilyUpdate update = familyUpdateService.postUpdate(user,familyUpdateDto.getBody());
+        familyUpdateService.postUpdate(user,familyUpdateDto.getBody()); //removed unused FamilyUpdate variable to catch response, using dto instead
 
         FamilyUpdateDto response = new FamilyUpdateDto();
         response.setBody(familyUpdateDto.getBody());
