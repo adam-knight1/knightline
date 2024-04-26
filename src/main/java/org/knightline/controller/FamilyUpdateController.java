@@ -1,6 +1,7 @@
 package org.knightline.controller;
 
 import org.knightline.dto.FamilyUpdateDto;
+import org.knightline.dto.UserDto;
 import org.knightline.repository.entity.FamilyUpdate;
 import org.knightline.repository.entity.User;
 import org.knightline.service.FamilyUpdateService;
@@ -28,7 +29,7 @@ public class FamilyUpdateController {
         this.userService = userService;
     }
 
-    /** Method to post updates to the family messageboard
+    /** Method to post updates to the family message board
      *
      * @param familyUpdateDto
      * @param principal
@@ -38,10 +39,16 @@ public class FamilyUpdateController {
     //todo - change to use FamilyUpdateDto
 
     @PostMapping("/post-update")
-    public ResponseEntity<FamilyUpdate> postUpdate(@RequestBody FamilyUpdateDto familyUpdateDto, Principal principal) {
+    public ResponseEntity<FamilyUpdateDto> postUpdate(@RequestBody FamilyUpdateDto familyUpdateDto, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
-        FamilyUpdate update = familyUpdateService.postUpdate(user,familyUpdateDto.getMessage());
-        return new ResponseEntity<>(update, HttpStatus.CREATED);
+        familyUpdateService.postUpdate(user,familyUpdateDto.getBody()); //removed unused FamilyUpdate variable to catch response, using dto instead
+
+        FamilyUpdateDto response = new FamilyUpdateDto();
+        response.setBody(familyUpdateDto.getBody());
+        response.setUser(new UserDto(user.getUserId(),user.getName(), user.getEmail()));
+        response.setCreatedAt(familyUpdateDto.getCreatedAt());
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /** Retrieves all messages posted on the update board, to be displayed on the front end

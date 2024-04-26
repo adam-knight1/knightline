@@ -14,7 +14,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {
-
     private final PhotoService photoService;
 
     public PhotoController(PhotoService photoservice) {

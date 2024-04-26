@@ -1,6 +1,8 @@
 package org.knightline.controller;
 
+import org.knightline.dto.CalendarEventDto;
 import org.knightline.dto.FamilyUpdateDto;
+import org.knightline.dto.UserDto;
 import org.knightline.repository.entity.CalendarEvent;
 import org.knightline.repository.entity.FamilyUpdate;
 import org.knightline.repository.entity.User;
@@ -27,11 +29,19 @@ public class CalendarController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CalendarEvent> createEvent(@RequestBody CalendarEvent calendarEvent, Principal principal) {
+    public ResponseEntity<CalendarEventDto> createEvent(@RequestBody CalendarEvent calendarEvent, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
+        UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail());
 
         CalendarEvent newEvent = calendarService.createCalendarEvent(user, calendarEvent.getTitle(), calendarEvent.getDescription(), calendarEvent.getEventTime());
 
-        return ResponseEntity.ok(newEvent);
+        CalendarEventDto calendarEventDto = new CalendarEventDto();
+                calendarEventDto.setEventTime(newEvent.getEventTime());
+                calendarEventDto.setDescription(newEvent.getDescription());
+                calendarEventDto.setUser(userDto);
+                calendarEventDto.setTitle(newEvent.getTitle());
+                calendarEventDto.setId(newEvent.getId());
+
+        return ResponseEntity.ok(calendarEventDto);
     }
 }
