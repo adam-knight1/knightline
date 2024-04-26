@@ -11,6 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Calendar service handles all of the service-layer functions related to calendar events
+ * A variety of functions are necessary for a dynamic calendar, such as creating and editing an event,
+ * RSVPing and commenting on an event.  These methods are called in the controller to interact with the client.
+ */
 @Service
 public class CalendarService {
 
