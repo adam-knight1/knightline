@@ -26,7 +26,7 @@ const HomePage = () => {
                 Log In
               </button>
             </Link>
-            <Link href="/signup">
+            <Link href="/create-user">
               <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300 ease-in-out">
                 Create Account
               </button>
