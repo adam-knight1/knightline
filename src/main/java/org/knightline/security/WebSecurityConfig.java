@@ -46,10 +46,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()  // Allow all for auth paths
                 .anyRequest().authenticated()  // Other requests require authentication
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);  // Using stateless session; session won't be used to store user's state.
-
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Add JWT filter pending implementation of class
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Adding JWT filter
     }
+
 
     @Bean
     PasswordEncoder passwordEncoder() {
