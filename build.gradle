@@ -18,6 +18,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'software.amazon.awssdk:s3:2.25.21'  //adding to use S3 for photo storage, latest version
+    implementation 'io.jsonwebtoken:jjwt:0.9.1' //added for jwt token use, import statements in JwtUtil
+
 
     runtimeOnly 'org.postgresql:postgresql'
 
