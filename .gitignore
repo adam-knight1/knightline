@@ -1,19 +1,7 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# macOS-specific files
-.DS_Store
-
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -22,19 +10,11 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs
-hs_err_pid*
-replay_pid*
-
-# Gradle files
-.gradle/
-build/
-
-# Ignore Gradle wrapper jar file (.jar files are usually ignored, but update accordingly if needed)
-!gradle-wrapper.jar
-
-# Ignore Gradle wrapper properties file
-!gradle-wrapper.properties
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # IntelliJ IDEA files
 .idea/
@@ -42,17 +22,41 @@ build/
 *.iws
 *out/
 
-# Gradle specific ignore rules
+# macOS-specific files
+.DS_Store
+Thumbs.db
+
+# Node.js modules
+/node_modules/
+
+# Next.js build output
+/.next/
+/out/
+
+# Gradle files
+.gradle/
+build/
+!gradle-wrapper.jar
+!gradle-wrapper.properties
 .gradle/7.5.1/fileHashes/
 .gradle/7.5.1/executionHistory/
 .gradle/7.5.1/fileContent/
 .gradle/buildOutputCleanup/
 
-# Node.js modules (if using Node.js in the project)
-node_modules/
+# Environment files
+.env*
+!.env.example  # Exclude any .env files except the example
 
-# Other files and folders to ignore
+# Other directories
 bin/
-# target/
-# Add here any other directories or files you don't want to commit
+/dist/
+/build/
 
+# Miscellaneous files
+*.pid
+*.pid.lock
+*.seed
+*.pid.db
+hs_err_pid*
+replay_pid*
+.mtj.tmp/  # Mobile Tools for Java (J2ME)

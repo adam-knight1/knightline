@@ -2,12 +2,11 @@ package org.knightline.controller;
 
 import org.knightline.repository.entity.User;
 import org.knightline.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Handles the endpoints for user operations, such as create user.
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
 
     @Autowired
     public UserController(UserService userService){
@@ -25,6 +26,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user){
+        log.info(user.getEmail());
+        log.info(user.getName());
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
