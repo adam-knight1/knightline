@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -24,17 +25,17 @@ public class User {
     private UUID userId;
 
     @Column(nullable = false, length = 120)
-    @NotEmpty(message = "Name is required")
+    @NotBlank(message = "Name is required")
     private String name;
 
     @Column(nullable = false, unique = true, length = 150) //unique = true to prevent duplicate emails
-    @NotEmpty(message = "Email is required")
+    @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
 
     @Column(nullable = false)
     @NotEmpty(message = "Password is required")
-    private String password; // This is enconded via BCrypt
+    private String password; // This is encoded via BCrypt
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

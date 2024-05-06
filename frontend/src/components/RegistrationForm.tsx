@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 const RegistrationForm = () => {
     const [userData, setUserData] = useState({
-        username: '',
+        name: '',
         email: '',
         password: ''
     });
@@ -23,7 +23,7 @@ const RegistrationForm = () => {
         try {
             const response = await axios.post('http://localhost:8080/users', userData);
             console.log('Registration successful:', response.data);
-            router.push('/login'); // Redirecting to login page after successful registration instead of spring secuiry redirect
+            router.push('/login'); // Redirecting to login page after successful registration
         } catch (error) {
             console.error('Registration error:', error.response ? error.response.data : 'Error during registration');
         }
@@ -32,12 +32,12 @@ const RegistrationForm = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="name">Username:</label>
                 <input
                     type="text"
-                    id="username"
-                    name="username"
-                    value={userData.username}
+                    id="name"
+                    name="name"
+                    value={userData.name}
                     onChange={handleChange}
                     required
                 />
