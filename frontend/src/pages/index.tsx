@@ -15,7 +15,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-4">Welcome, {user ? user.name : 'Guest'}!</h1>
+        <h1 className="text-2xl font-bold text-center mb-4">Welcome to Knightline, {user ? user.name : 'Guest'}!</h1>
         {user ? (
           <p className="text-center">Explore Knightline</p>
         ) : (
