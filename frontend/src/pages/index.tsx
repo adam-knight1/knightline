@@ -7,10 +7,15 @@ const HomePage = () => {
   useEffect(() => {
     // Checking for user data in local storage
     const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
+    if (userData && typeof userData === 'string') {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (e) {
+        console.error('Failed to parse user data:', e);
+      }
     }
   }, []);
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">

@@ -17,11 +17,10 @@ const LoginForm = () => {
       const response = await axios.post('http://localhost:8080/auth/login', { email, password });  //sending post request to backend, may change to name
       console.log('Login successful:', response.data);
 
-      // Assuming the token is returned in the response data...
       localStorage.setItem('authToken', response.data.token);  // Store JWT in localStorage
       localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      router.push('/home');  // Navigate to home page on successful login
+      router.push('/user-page');  // Navigate to home page on successful login
     } catch (error) {
       console.error('Login error:', error.response ? error.response.data : 'Error during login');
     }
@@ -45,7 +44,7 @@ const LoginForm = () => {
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          placeholder="Password" // Placeholder text to guide users
+          placeholder="Password"
         />
 
         <button type="submit">Log In</button>
