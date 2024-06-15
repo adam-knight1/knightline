@@ -119,7 +119,7 @@ public class User {
         this.photos = photos;
     }
 
-    public void setProfilePictureLink(String profilePictureUrl) {
+    public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
     }
 }

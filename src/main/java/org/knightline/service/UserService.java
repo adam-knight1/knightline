@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 import java.util.UUID;
 
 //This class is responsible for the User specific operations at the service layer
@@ -43,9 +44,17 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
+    public Optional<User> findUserByEmailOptional(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public UserDto getUserData(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
         return new UserDto(user.getUserId(), user.getName(), user.getEmail(), user.getProfilePictureUrl());
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
     }
 }

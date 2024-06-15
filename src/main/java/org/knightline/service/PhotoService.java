@@ -60,8 +60,34 @@ public class PhotoService {
         photoRepository.save(photo); //saving photo entity/metadata to postgres database
 
         return photoUrl;
-
     }
+
+    public String uploadProfilePicture(MultipartFile file, String email) throws IOException {
+        String bucketName = "knightlinephotos";
+        String directoryPrefix = "profile-pictures/"; // Specific directory for profile pictures
+        String s3Key = directoryPrefix + generateUniqueKey(file.getOriginalFilename(), email);
+        String region = "us-east-1";
+
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(s3Key)
+                .build();
+
+        // Upload file to S3 directly from an InputStream
+        s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+        // Constructing the URL for the uploaded profile picture
+        String profilePicUrl = String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, s3Key);
+
+        // Updating the user's profile picture URL in the database
+        User user = userService.findUserByEmailOptional(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setProfilePictureUrl(profilePicUrl);
+        userService.updateUser(user);
+
+        return profilePicUrl;
+    }
+
+
 
     private String generateUniqueKey(String originalFilename, String username){
         String fileExtension = StringUtils.getFilenameExtension(originalFilename);
