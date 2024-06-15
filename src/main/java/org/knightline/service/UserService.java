@@ -34,19 +34,38 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findUserByUsername(String username) {
+    public User findUserByUsername(String username) { //todo correct!
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
-    public User findUserByEmail(String email) {
+    public User findUserByEmailUserDto(String email){
+
+       User user = userRepository.findByEmail(email)
+               .orElseThrow(() -> new UsernameNotFoundException("not found here"));
+
+       UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail(),user.getProfilePictureUrl());
+
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("not found" + userDto + " and " + email));
     }
 
-    public Optional<User> findUserByEmailOptional(String email) {
-        return userRepository.findByEmail(email);
+    public User findUserByEmail(String email) {
+
+        System.out.println(userRepository.findByEmail(email));
+            return userRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
+
+    public User findUserByEmailOptional(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+    }
+
 
     public UserDto getUserData(UUID userId) {
         User user = userRepository.findById(userId)

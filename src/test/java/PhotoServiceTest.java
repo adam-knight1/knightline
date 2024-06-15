@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,8 +51,8 @@ public class PhotoServiceTest {
         // Mocking the multipart file creation (the photo)
         MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", "test image content".getBytes());
         User mockUser = new User();
-        mockUser.setEmail("user@test.com");
-        when(userService.findUserByEmail("user@test.com")).thenReturn(mockUser);
+        mockUser.setEmail("Neuronorth686@icloud.com");
+//        when(userService.findUserByEmailOptional("user@test.com")).thenReturn(Optional.of(mockUser));
 
         // Mocking S3 upload
         when(s3Client.putObject(any(PutObjectRequest.class), any(RequestBody.class))).thenReturn(PutObjectResponse.builder().build());
@@ -60,7 +61,7 @@ public class PhotoServiceTest {
         when(photoRepository.save(any(Photo.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Calling service method to upload photo
-        String resultUrl = photoService.uploadPhoto(file, "user@test");
+        String resultUrl = photoService.uploadPhoto(file, "Neuronorth686@icloud.com");
 
         //Assertions and verifications
         assertNotNull(resultUrl);

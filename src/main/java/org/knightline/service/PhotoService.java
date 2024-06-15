@@ -1,8 +1,13 @@
 package org.knightline.service;
 
+import org.knightline.dto.UserDto;
 import org.knightline.repository.PhotoRepository;
+import org.knightline.repository.UserRepository;
 import org.knightline.repository.entity.Photo;
 import org.knightline.repository.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -18,7 +23,7 @@ import java.util.UUID;
 public class PhotoService {
     private final S3Client s3Client;
     private final PhotoRepository photoRepository;
-
+    private static final Logger log = LoggerFactory.getLogger(PhotoService.class);
     private final UserService userService;
 
     public PhotoService(S3Client s3Client,PhotoRepository photoRepository,UserService userService){
@@ -28,6 +33,7 @@ public class PhotoService {
     }
 
     public String uploadPhoto(MultipartFile file, String email) throws IOException {
+        System.out.println("Reached service");
         String bucketName = "knightlinephotos";
         String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
         String region = "us-east-1";
@@ -43,7 +49,18 @@ public class PhotoService {
         // Constructing the URL for the uploaded file
         String photoUrl = String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, s3Key);
 
+       //error
         User user = userService.findUserByEmail(email);
+
+        User user2 = userService.findUserByUsername(email);
+
+        User user3 = userService.findUserByEmailOptional(email);
+
+        System.out.println(email);
+
+        System.out.println(user);
+        System.out.println(user2);
+        System.out.println(user3);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -63,27 +80,62 @@ public class PhotoService {
     }
 
     public String uploadProfilePicture(MultipartFile file, String email) throws IOException {
+        log.info("Starting uploadProfilePicture method");
+
+        System.out.println("reached profile service here");
+
         String bucketName = "knightlinephotos";
-        String directoryPrefix = "profile-pictures/"; // Specific directory for profile pictures
-        String s3Key = directoryPrefix + generateUniqueKey(file.getOriginalFilename(), email);
+        //String directoryPrefix = "profile-pictures/"; // Specific directory for profile pictures
+        //String s3Key = directoryPrefix + generateUniqueKey(file.getOriginalFilename(), email);
+        String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
+
         String region = "us-east-1";
+
+        log.info("Generated S3 key: {}", s3Key);
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(s3Key)
                 .build();
 
-        // Upload file to S3 directly from an InputStream
-        s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+        log.info("Uploading file to S3");
+
+        try {
+            // Upload file to S3 directly from an InputStream
+            s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+        } catch (Exception e) {
+            log.error("Error uploading file to S3", e);
+            throw new IOException("Error uploading file to S3", e);
+        }
 
         // Constructing the URL for the uploaded profile picture
         String profilePicUrl = String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, s3Key);
 
-        // Updating the user's profile picture URL in the database
-        User user = userService.findUserByEmailOptional(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        user.setProfilePictureUrl(profilePicUrl);
-        userService.updateUser(user);
+        log.info("Constructed profile picture URL: {}", profilePicUrl);
 
+        try {
+            log.info("Fetching user by email: {}", email);
+            // Updating the user's profile picture URL in the database
+            User user = userService.findUserByEmailUserDto(email);
+            System.out.println("reached me in service, user is : " + user);
+                   // .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            log.info("User found: {}", user.getEmail());
+
+            user.setProfilePictureUrl(profilePicUrl);
+            userService.updateUser(user);
+            log.info("User profile picture URL updated");
+        } catch (UsernameNotFoundException e) {
+            log.error("User not found for email: {}", email, e);
+            throw new IOException("User not found", e);
+        } catch (DataAccessException e) {
+            log.error("Database access error", e);
+            throw new IOException("Error updating user information", e);
+        } catch (Exception e) {
+            log.error("Unexpected error", e);
+            throw e;
+        }
+
+        log.info("Completed uploadProfilePicture method");
         return profilePicUrl;
     }
 

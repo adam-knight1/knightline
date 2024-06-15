@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/**" , "/users/**").permitAll()  // Allow all for auth paths
+                .antMatchers("/auth/**" , "/users/**","/photos/**").permitAll()  // Allow all for auth paths
                 .anyRequest().authenticated()  // Other requests require authentication
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

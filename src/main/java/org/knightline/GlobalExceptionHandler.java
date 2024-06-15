@@ -1,3 +1,4 @@
+/*
 package org.knightline;
 
 import org.springframework.http.HttpStatus;
@@ -27,3 +28,4 @@ public class GlobalExceptionHandler {
     }
 }
 
+*/

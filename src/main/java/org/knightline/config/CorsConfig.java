@@ -14,9 +14,11 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // Applying CORS to all endpoints
-                .allowedOrigins("http://localhost:3000")  // Allowing the temporary local frontend origin
+                .allowedOrigins("http://localhost:3000")  // Allowing the temporary local frontend origin, can use allowedOriginPatterns later for multi domain
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allowing standard methods
                 .allowedHeaders("*")
+                //.allowedHeaders("Authorization", "Content-Type", "X-Requested-With", "Accept")  // Specify only the necessary headers
+                //todo -configure permissions and headers
                 .allowCredentials(true)  // Optional if I need to include cookies later
                 .maxAge(3600);  // age for options request
     }
