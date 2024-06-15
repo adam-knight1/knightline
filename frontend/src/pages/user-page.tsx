@@ -7,8 +7,8 @@ const UserPage = () => {
   useEffect(() => {
     // Simulate fetching user data for now
     const userData = {
-      name: 'banjo',
-      imageUrl: 'https://example.com/banjo.jpg'
+      name: 'Adam',
+      imageUrl: 'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
     };
     setUser(userData);
 
@@ -17,7 +17,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <h1>User Page</h1>
+      <h1></h1>
       {user && <UserComponent user={user} />}
     </div>
   );

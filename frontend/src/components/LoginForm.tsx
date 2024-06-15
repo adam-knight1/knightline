@@ -1,5 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import axios from 'axios';
+import './Styles.css';
+
 import { useRouter } from 'next/router';
 
 /** Login component to handle interaction with spring security framework on the backend
