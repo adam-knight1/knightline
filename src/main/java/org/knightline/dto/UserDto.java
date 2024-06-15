@@ -6,7 +6,6 @@ public class UserDto {
     private UUID userId;
     private String name;
     private String email;
-    private String password; //added for debugging purposes,
 
     public UserDto(UUID userId, String name, String email) {
         this.userId = userId;
