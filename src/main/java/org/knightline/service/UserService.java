@@ -46,6 +46,6 @@ public class UserService {
     public UserDto getUserData(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
-        return new UserDto(user.getUserId(), user.getName(), user.getEmail());
+        return new UserDto(user.getUserId(), user.getName(), user.getEmail(), user.getProfilePictureUrl());
     }
 }
