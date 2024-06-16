@@ -52,6 +52,8 @@ public class PhotoService {
        //error
         User user = userService.findUserByEmail(email);
 
+        User user4 = userService.findUserByEmailUserDto(email);
+
         User user2 = userService.findUserByUsername(email);
 
         User user3 = userService.findUserByEmailOptional(email);
@@ -61,6 +63,7 @@ public class PhotoService {
         System.out.println(user);
         System.out.println(user2);
         System.out.println(user3);
+        System.out.println(user4);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,9 @@ public class PhotoController {
         }
     }
 
-   @PostMapping("/upload/profile")
+
+
+/*   @PostMapping("/upload/profile")
    public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal Principal principal) {
        log.info("Received request to upload profile picture for user: {}", principal.getName());
        System.out.println("Reached controller");
@@ -59,7 +62,28 @@ public class PhotoController {
            log.error("Error uploading profile picture for user: {}", principal.getName(), e);
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
        }
-   }
+   }*/
 
+   /* @PostMapping("/upload/profile")
+    public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Authentication authentication) {
+        try {
+            String email = authentication.getName(); // Get the email from the authenticated user
+            String photoUrl = photoService.uploadProfilePicture(file, email);
+            return ResponseEntity.ok().body(Map.of("url", photoUrl));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }*/
+   @PostMapping("/upload/profile")
+   public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Authentication authentication) {
+       try {
+           String email = authentication.getName();  // This should give the username/email from the token
+           String photoUrl = photoService.uploadProfilePicture(file, email);
+           return ResponseEntity.ok().body(Map.of("url", photoUrl));
+       } catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+       }
+   }
 }
+
 

@@ -32,8 +32,8 @@ const UserComponent = ({ user }: UserProps) => {
 
 export default UserComponent; */
 
-import React from 'react';
-import './UserComponent.css';
+/* import React from 'react';
+import UserPageStyle from '../UserPageStyle.css';
 
 type UserProps = {
   user: {
@@ -61,8 +61,8 @@ const UserComponent = ({ user, onProfilePictureUpload }: UserProps) => {
         alt={`${user.name}'s profile`}
         className="w-48 h-48 rounded-full mx-auto"
       />
-      {/* File input for uploading new profile picture */}
-      <input type="file" onChange={handleFileChange} accept="image/*" className="mt-4" />
+      { *//* File input for uploading new profile picture *//* }
+      <input type="file" onChange={handleFileChange} accept="image *//*" className="mt-4" />
       <ul className="list-none p-0 mt-4 space-y-2">
         <li className="hover:underline">Family Calendar</li>
         <li className="hover:underline">Family Message Board</li>
@@ -74,6 +74,34 @@ const UserComponent = ({ user, onProfilePictureUpload }: UserProps) => {
   );
 };
 
+export default UserComponent; */
+import React, { useState } from 'react';
+
+const UserComponent = ({ user, onProfilePictureUpload }) => {
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    onProfilePictureUpload(selectedFile);
+  };
+
+  return (
+    <div className="user-profile">
+      <h1>Welcome to Knightline, {user.name}!</h1>
+      {user.imageUrl && (
+        <img
+          src={user.imageUrl}
+          alt={`${user.name}'s profile`}
+          style={{ borderRadius: '50%', width: '150px', height: '150px' }}
+        />
+      )}
+      <input type="file" onChange={handleFileChange} accept="image/*" />
+    </div>
+  );
+};
+
 export default UserComponent;
+
 
 
