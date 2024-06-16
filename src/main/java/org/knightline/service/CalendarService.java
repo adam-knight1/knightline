@@ -1,3 +1,4 @@
+// See the LICENSE file in the root of the repository for license details.
 package org.knightline.service;
 
 import org.knightline.repository.CalendarEventRepository;

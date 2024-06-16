@@ -1,10 +1,9 @@
+// See the LICENSE file in the root of the repository for license details.
 package org.knightline.controller;
 
 import org.knightline.dto.CalendarEventDto;
-import org.knightline.dto.FamilyUpdateDto;
 import org.knightline.dto.UserDto;
 import org.knightline.repository.entity.CalendarEvent;
-import org.knightline.repository.entity.FamilyUpdate;
 import org.knightline.repository.entity.User;
 import org.knightline.service.CalendarService;
 import org.knightline.service.UserService;
