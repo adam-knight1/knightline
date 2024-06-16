@@ -48,45 +48,6 @@ public class PhotoController {
         }
     }
 
-
-
-/*   @PostMapping("/upload/profile")
-   public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal Principal principal) {
-       log.info("Received request to upload profile picture for user: {}", principal.getName());
-       System.out.println("Reached controller");
-       try {
-           String photoUrl = photoService.uploadProfilePicture(file, principal.getName());
-           log.info("Profile picture uploaded successfully for user: {}. URL: {}", principal.getName(), photoUrl);
-           return ResponseEntity.ok().body(Map.of("url", photoUrl));
-       } catch (Exception e) {
-           log.error("Error uploading profile picture for user: {}", principal.getName(), e);
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-       }
-   }*/
-
-   /* @PostMapping("/upload/profile")
-    public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Authentication authentication) {
-        try {
-            String email = authentication.getName(); // Get the email from the authenticated user
-            String photoUrl = photoService.uploadProfilePicture(file, email);
-            return ResponseEntity.ok().body(Map.of("url", photoUrl));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }*/
-  /* @PostMapping("/upload/profile")
-   public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Authentication authentication) {
-       try {
-           String email = authentication.getName();  // This should give the username/email from the token
-           String photoUrl = photoService.uploadProfilePicture(file, email);
-           return ResponseEntity.ok().body(Map.of("url", photoUrl));
-       } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-       }
-   }
-}
-*/
-
     @PostMapping("/upload/profile")
     public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Principal principal) {
         try {

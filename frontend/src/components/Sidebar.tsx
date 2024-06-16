@@ -6,8 +6,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <ul>
         <li>Family Calendar</li>
-        <li>Family Message Board</li>
-        <li>Upload Photo</li>
+        <li>Family Updates</li>
+        <li>Photo Album</li>
         <li>Send Direct Message</li>
         <li>Edit User Details</li>
       </ul>
