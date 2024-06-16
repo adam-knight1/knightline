@@ -8,7 +8,7 @@ It runs on a spring boot backend and a NextJS frontend, primarily written in typ
 
 # Security
 
-The application is secured via the spring security framework and JWT authentication, with additional password hashing handled via bcrypt.
+The application is secured via the spring security framework, JWT authentication, encapsulation, and password hashing.
 
 # Data
 
@@ -21,3 +21,8 @@ The frontend uses the NextJS framework,
 # Future Directions
 
 This project is being continually developed daily, check back for the latest features!
+
+## License
+
+This project is licensed under the Proprietary License - see the LICENSE file for more details.
+

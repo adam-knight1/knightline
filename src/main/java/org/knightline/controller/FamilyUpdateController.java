@@ -45,7 +45,7 @@ public class FamilyUpdateController {
 
         FamilyUpdateDto response = new FamilyUpdateDto();
         response.setBody(familyUpdateDto.getBody());
-        response.setUser(new UserDto(user.getUserId(),user.getName(), user.getEmail()));
+        response.setUser(new UserDto(user.getUserId(),user.getName(), user.getEmail(),user.getProfilePictureUrl()));
         response.setCreatedAt(familyUpdateDto.getCreatedAt());
 
         return new ResponseEntity<>(HttpStatus.CREATED);

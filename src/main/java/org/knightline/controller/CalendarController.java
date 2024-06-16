@@ -31,7 +31,7 @@ public class CalendarController {
     @PostMapping("/create")
     public ResponseEntity<CalendarEventDto> createEvent(@RequestBody CalendarEvent calendarEvent, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
-        UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail());
+        UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail(), user.getProfilePictureUrl());
 
         CalendarEvent newEvent = calendarService.createCalendarEvent(user, calendarEvent.getTitle(), calendarEvent.getDescription(), calendarEvent.getEventTime());
 

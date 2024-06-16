@@ -43,14 +43,20 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public User(){}
+    @Column(nullable = true) // Nullable since users don't technically have to have a pic.
+    private String profilePictureUrl; // Field for storing the s3 URL for the picture
+
+
+    public User() {
+    }
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
-        @PrePersist
+
+    @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
@@ -65,17 +71,55 @@ public class User {
     @JsonManagedReference //added to overcome infinite recursion with photos/user pending dto implementation
     private List<Photo> photos;
 
-    public UUID getUserId() { return userId; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setName(String name) { this.name = name; }
-    public void setEmail(String email) { this.email = email; }
-    public void setPassword(String password) { this.password = password; }
-    public List<Photo> getPhotos() { return photos; }
-    public void setPhotos(List<Photo> photos) { this.photos = photos; }
+    public UUID getUserId() {
+        return userId;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
 }
