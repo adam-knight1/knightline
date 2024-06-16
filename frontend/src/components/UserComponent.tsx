@@ -104,4 +104,3 @@ const UserComponent = ({ user, onProfilePictureUpload }) => {
 export default UserComponent;
 
 
-
