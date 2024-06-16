@@ -8,7 +8,7 @@ It runs on a spring boot backend, with a forthcoming NextJS frontend.
 
 # Security
 
-The application is secured via the spring security framework, with additional password hashing handled via bcrypt.
+The application is secured via the spring security framework, JWT authentication, encapsulation, and password hashing.
 
 # Data
 
@@ -17,3 +17,7 @@ Data is handled via Postgres tables.  Photo metadata is uploaded to Postgres, wh
 # Future Directions
 
 This project is being continually developed daily, check back for the latest features!
+
+## License
+
+This project is licensed under the Proprietary License - see the LICENSE file for more details.
