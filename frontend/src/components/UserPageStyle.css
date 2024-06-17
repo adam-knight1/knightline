@@ -125,7 +125,7 @@ input[type="file"] {
 
 .hover\:underline:hover {
   text-decoration: underline;
-  color: #a78bfa; /* Changing text color on hover  */
+  color: #a78bfa; /* Changing text color on hover, a bit too dark blue still  */
 }
 
 
