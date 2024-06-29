@@ -4,6 +4,8 @@
     "@fullcalendar/interaction": "^6.1.14",
     "@fullcalendar/react": "^6.1.14",
     "@fullcalendar/timegrid": "^6.1.14",
-    "axios": "^1.7.2"
+    "axios": "^1.7.2",
+    "react-photo-gallery": "^8.0.0",
+    "styled-components": "^6.1.11"
   }
 }
