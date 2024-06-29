@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import styles from './UserPage.css';
+
 
 const HomePage = () => {
   const [user, setUser] = useState(null);
@@ -16,16 +18,17 @@ const HomePage = () => {
     }
   }, []);
 
-
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-4">Welcome to Knightline, {user ? user.name : 'Guest'}!</h1>
+    <div className="min-h-screen bg-light-blue flex flex-col justify-center items-center">
+      <h1 className="text-4xl font-bold text-center mb-4 text-blue-500">Welcome to Knightline</h1>
+      <img src="/adampic.jpeg" alt="Knightline" className="w-64 h-64 mb-8 rounded-lg object-cover" />
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md text-center">
+        <h2 className="text-2xl font-bold mb-4">Welcome, {user ? user.name : 'Guest'}!</h2>
         {user ? (
-          <p className="text-center">Explore Knightline</p>
+          <p>Explore Knightline</p>
         ) : (
           <div className="flex flex-col space-y-4">
-            <p className="text-center">Please log in to continue.</p>
+            <p>Please log in to continue.</p>
             <Link href="/login">
               <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out">
                 Log In

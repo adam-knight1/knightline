@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import axios from 'axios';
-import './Styles.css';
+import styles from './RegistrationForm.css';
 import { useRouter } from 'next/router';
 
 const RegistrationForm = () => {
