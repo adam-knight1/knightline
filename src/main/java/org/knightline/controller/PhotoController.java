@@ -59,15 +59,14 @@ public class PhotoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Photo>> getAllPhotos(Principal principal) {
+    public ResponseEntity<List<Photo>> getAllPhotos() {
         try {
-            List<Photo> photos = photoService.getAllPhotos(principal.getName());
+            List<Photo> photos = photoService.getAllPhotos();
             return ResponseEntity.ok(photos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }
     }
-
 }
 
 

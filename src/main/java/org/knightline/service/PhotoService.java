@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -152,5 +153,10 @@ public class PhotoService {
 
         return String.format("%s_%s_%s.%s", username, baseName, UUID.randomUUID().toString(), fileExtension);
     }
+
+    public List<Photo> getAllPhotos() {
+        return photoRepository.findAll();
+    }
+
 }
 
