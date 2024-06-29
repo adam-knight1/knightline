@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @Service
 public class CalendarService {
@@ -34,23 +36,30 @@ public class CalendarService {
      */
 
     @Transactional
-    //todo - switch to user DTO
-    public CalendarEvent createCalendarEvent(User user, String title, String description, ZonedDateTime eventTime) {
+    public CalendarEvent createCalendarEvent(User user, String title, String description, String eventTime) {
+        ZonedDateTime zonedEventTime;
+        try {
+            zonedEventTime = ZonedDateTime.parse(eventTime);
+        } catch (DateTimeParseException e) {
+            throw new RuntimeException("Invalid date format for eventTime", e);
+        }
+
         CalendarEvent calendarEvent = new CalendarEvent();
         calendarEvent.setCreatedAt(ZonedDateTime.now());
         calendarEvent.setUser(user);
         calendarEvent.setDescription(description);
         calendarEvent.setTitle(title);
-        calendarEvent.setEventTime(eventTime);
-
-        CalendarEvent savedEvent = calendarEventRepository.save(calendarEvent);
+        calendarEvent.setEventTime(zonedEventTime);
 
         try {
             return calendarEventRepository.save(calendarEvent);
         } catch (DataIntegrityViolationException ex) {
             throw new RuntimeException("Failed to save the calendar event due to data integrity issues.", ex);
         }
+    }
 
 
+    public List<CalendarEvent> getAllEvents() {
+        return calendarEventRepository.findAll();
     }
 }

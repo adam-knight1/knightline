@@ -3,11 +3,19 @@ import CalendarComponent from '../components/CalendarComponent';
 import AddEventForm from '../components/AddEventForm';
 
 const CalendarPage = () => {
+    const calendarRef = React.createRef();
+
+    const refreshEvents = () => {
+        if (calendarRef.current) {
+            calendarRef.current.fetchEvents();
+        }
+    };
+
     return (
         <div>
             <h1>Family Calendar</h1>
-            <CalendarComponent />
-            <AddEventForm />
+            <CalendarComponent ref={calendarRef} />
+            <AddEventForm refreshEvents={refreshEvents} />
         </div>
     );
 };

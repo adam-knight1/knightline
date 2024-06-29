@@ -89,7 +89,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
+/*
                 .antMatchers("/auth/**", "/users/**", "/photos/upload/profile").permitAll()  // Allow access to upload profile endpoint
+*/
+                .antMatchers("/auth/**").permitAll() // allow unauthenticated access to auth endpoints
+                .antMatchers("/users/**" , "/calendar/**" , "/photos/upload/profile").authenticated()
                 .anyRequest().authenticated()  // Other requests require authentication
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
