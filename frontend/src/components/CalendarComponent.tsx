@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, forwardRef, useImperativeHandl
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 
 const CalendarComponent = forwardRef((props, ref) => {
@@ -56,11 +57,16 @@ const CalendarComponent = forwardRef((props, ref) => {
         fetchEvents();
     }, [fetchEvents]);
 
+    const handleEventClick = (info) => {
+        alert(`Event: ${info.event.title}\nDescription: ${info.event.extendedProps.description}\nLocation: ${info.event.extendedProps.location}`);
+    };
+
     return (
         <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin]}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             events={events}
+            eventClick={handleEventClick}
         />
     );
 });
