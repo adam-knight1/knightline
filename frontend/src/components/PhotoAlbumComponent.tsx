@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Gallery from 'react-photo-gallery';
+import { Gallery } from 'react-grid-gallery';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -29,7 +29,7 @@ const PhotoAlbumComponent = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/photos', {
+        const response = await axios.get('http://localhost:8080/photos/get', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -37,13 +37,14 @@ const PhotoAlbumComponent = () => {
 
         const photoData = response.data.map(photo => ({
           src: photo.url,
-          width: 4,
-          height: 3,
-          title: photo.title,
-          description: photo.description
+          thumbnail: photo.url,
+          thumbnailWidth: 320,
+          thumbnailHeight: 212,
+          caption: `${photo.title} - ${photo.description}`
         }));
 
         setPhotos(photoData);
+        console.log("Fetched photos: ", photoData);
       } catch (error) {
         console.error("There was an error fetching the photos!", error);
       }
@@ -55,9 +56,10 @@ const PhotoAlbumComponent = () => {
   return (
     <GalleryContainer>
       <Title>Family Photo Album</Title>
-      <Gallery photos={photos} />
+      <Gallery images={photos} />
     </GalleryContainer>
   );
 };
 
 export default PhotoAlbumComponent;
+

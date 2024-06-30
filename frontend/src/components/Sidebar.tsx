@@ -11,7 +11,7 @@ const Sidebar = () => {
             <ul>
                 <li><Link href="/calendar">Family Calendar</Link></li>
                 <li><Link href="/updates">Family Updates</Link></li>
-                <li><Link href="/photos">Family Photos</Link></li>
+                <li><Link href="/photo-album">Family Photo Album</Link></li>
                 <li><Link href="/messages">Send Direct Message</Link></li>
                 <li><Link href="/edit-user">Edit User Details</Link></li>
                 <li><button onClick={logout}>Logout</button></li>
