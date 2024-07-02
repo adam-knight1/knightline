@@ -157,6 +157,13 @@ body {
   object-fit: cover;
 }
 
+/* Remove any circular cropping */
+img {
+  border-radius: 0;
+  display: block;
+  margin: auto;
+}
+
 /* User Page Specific Styles */
 .user-page-container {
   display: flex;
@@ -206,14 +213,6 @@ h1 {
   font-size: 3rem; /* Larger font size */
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow */
   margin-bottom: 1rem;
-}
-
-img {
-  display: block;
-  margin: 20px auto;
-  border-radius: 50%;
-  width: 200px; /* Larger image size */
-  height: 200px;
 }
 
 input[type="file"] {
