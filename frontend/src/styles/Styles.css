@@ -137,9 +137,9 @@ body {
   padding-bottom: 0.5rem;
 }
 
-.rounded {
+/*.rounded {
   border-radius: 0.25rem;
-}
+}*/
 
 .object-cover {
   object-fit: cover;
