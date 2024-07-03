@@ -70,6 +70,10 @@ const PhotoAlbumComponent = () => {
     fetchPhotos();
   }, []);
 
+  useEffect(() => {
+    console.log("Photos to render: ", photos);
+  }, [photos]);
+
   return (
     <GalleryContainer>
       <BackButton onClick={() => router.back()}>Back</BackButton>

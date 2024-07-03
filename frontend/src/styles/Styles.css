@@ -157,13 +157,6 @@ body {
   object-fit: cover;
 }
 
-/* Remove any circular cropping */
-img {
-  border-radius: 0;
-  display: block;
-  margin: auto;
-}
-
 /* User Page Specific Styles */
 .user-page-container {
   display: flex;
@@ -211,7 +204,7 @@ h1 {
   color: #5A8DEE;
   font-family: 'Playfair Display', serif;
   font-size: 3rem; /* Larger font size */
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* subtle shadow */
   margin-bottom: 1rem;
 }
 
