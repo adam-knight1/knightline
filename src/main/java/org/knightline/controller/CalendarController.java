@@ -7,13 +7,14 @@ import org.knightline.repository.entity.CalendarEvent;
 import org.knightline.repository.entity.User;
 import org.knightline.service.CalendarService;
 import org.knightline.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/calendar")
@@ -28,19 +29,43 @@ public class CalendarController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CalendarEventDto> createEvent(@RequestBody CalendarEvent calendarEvent, Principal principal) {
+    public ResponseEntity<CalendarEventDto> createEvent(@RequestBody CalendarEventDto calendarEventDto, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
-        UserDto userDto = new UserDto(user.getUserId(),user.getName(),user.getEmail(), user.getProfilePictureUrl());
+        UserDto userDto = new UserDto(user.getUserId(), user.getName(), user.getEmail(), user.getProfilePictureUrl());
 
-        CalendarEvent newEvent = calendarService.createCalendarEvent(user, calendarEvent.getTitle(), calendarEvent.getDescription(), calendarEvent.getEventTime());
+        // Convert eventTime from String to ZonedDateTime
+        CalendarEvent newEvent = calendarService.createCalendarEvent(
+                user,
+                calendarEventDto.getTitle(),
+                calendarEventDto.getDescription(),
+                calendarEventDto.getEventTime()  // Still a String here
+        );
 
-        CalendarEventDto calendarEventDto = new CalendarEventDto();
-                calendarEventDto.setEventTime(newEvent.getEventTime());
-                calendarEventDto.setDescription(newEvent.getDescription());
-                calendarEventDto.setUser(userDto);
-                calendarEventDto.setTitle(newEvent.getTitle());
-                calendarEventDto.setId(newEvent.getId());
+        // prepare the response DTO
+        CalendarEventDto responseDto = new CalendarEventDto();
+        responseDto.setId(newEvent.getId());
+        responseDto.setTitle(newEvent.getTitle());
+        responseDto.setDescription(newEvent.getDescription());
+        responseDto.setEventTime(newEvent.getEventTime().toString());  // convert back to String if needed
+        responseDto.setUser(userDto);
 
-        return ResponseEntity.ok(calendarEventDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/events")
+    public ResponseEntity<List<CalendarEventDto>> getAllEvents() {
+        List<CalendarEvent> events = calendarService.getAllEvents();
+        System.out.println("Fetched events: " + events.size()); // Log number of events fetched
+        List<CalendarEventDto> eventDtos = events.stream().map(event -> {
+            CalendarEventDto dto = new CalendarEventDto();
+            dto.setId(event.getId());
+            dto.setTitle(event.getTitle());
+            dto.setDescription(event.getDescription());
+            dto.setEventTime(event.getEventTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));; // ISO 8601 format for calendar
+            dto.setUser(new UserDto(event.getUser().getUserId(), event.getUser().getName(), event.getUser().getEmail(), event.getUser().getProfilePictureUrl()));
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(eventDtos, HttpStatus.OK);
     }
 }
+

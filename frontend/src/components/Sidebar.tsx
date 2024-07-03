@@ -1,18 +1,23 @@
 import React from 'react';
-import './Sidebar.css'; // Add your CSS file here
+import Link from 'next/link';
+import useLogout from '../hooks/useLogout'; // Import the custom hook
+
 
 const Sidebar = () => {
-  return (
-    <div className="sidebar">
-      <ul>
-        <li>Family Calendar</li>
-        <li>Family Updates</li>
-        <li>Photo Album</li>
-        <li>Send Direct Message</li>
-        <li>Edit User Details</li>
-      </ul>
-    </div>
-  );
+    const logout = useLogout();
+
+    return (
+        <div className="sidebar">
+            <ul>
+                <li><Link href="/calendar">Family Calendar</Link></li>
+                <li><Link href="/updates">Family Updates</Link></li>
+                <li><Link href="/photo-album">Family Photo Album</Link></li>
+                <li><Link href="/messages">Send Direct Message</Link></li>
+                <li><Link href="/edit-user">Edit User Details</Link></li>
+                <li><button onClick={logout}>Logout</button></li>
+            </ul>
+        </div>
+    );
 };
 
 export default Sidebar;

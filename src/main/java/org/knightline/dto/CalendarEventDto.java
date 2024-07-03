@@ -6,7 +6,7 @@ public class CalendarEventDto {
     private Long id;
     private String title;
     private String description;
-    private ZonedDateTime eventTime;
+    private String eventTime;
     private UserDto user;
 
     public CalendarEventDto() {}
@@ -35,11 +35,11 @@ public class CalendarEventDto {
         this.description = description;
     }
 
-    public ZonedDateTime getEventTime() {
+    public String getEventTime() {
         return eventTime;
     }
 
-    public void setEventTime(ZonedDateTime eventTime) {
+    public void setEventTime(String eventTime) {
         this.eventTime = eventTime;
     }
 

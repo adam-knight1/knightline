@@ -2,18 +2,18 @@
 
 package org.knightline.controller;
 
+import org.knightline.repository.entity.Photo;
 import org.knightline.service.PhotoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 //Photo controller class hosting the endpoints for various photo related operations
@@ -28,7 +28,7 @@ public class PhotoController {
         this.photoService = photoservice;
     }
 
-    @PostMapping("/upload")
+   /* @PostMapping("/upload")
     public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file, Principal principal) {
         //principal variable should work to determine logged in user, contrary to local storage.
         if (file == null || file.isEmpty()) {
@@ -46,7 +46,33 @@ public class PhotoController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }*/
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadPhoto(@RequestParam("file") MultipartFile file, Principal principal) {
+        log.info("Received file: {}", file.getOriginalFilename());
+        log.info("Principal: {}", principal);
+
+        if (file == null || file.isEmpty()) {
+            log.error("File must not be empty.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File must not be empty.");
+        }
+
+        if (principal == null || principal.getName() == null) {
+            log.error("No authenticated user found.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No authenticated user found.");
+        }
+
+        try {
+            String photoUrl = photoService.uploadPhoto(file, principal.getName());
+            log.info("Photo uploaded successfully: {}", photoUrl);
+            return ResponseEntity.ok().body(Map.of("url", photoUrl));
+        } catch (Exception e) {
+            log.error("Error uploading photo", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
+
 
     @PostMapping("/upload/profile")
     public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Principal principal) {
@@ -55,6 +81,16 @@ public class PhotoController {
             return ResponseEntity.ok().body(Map.of("url", photoUrl));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<List<Photo>> getAllPhotos() {
+        try {
+            List<Photo> photos = photoService.getAllPhotos();
+            return ResponseEntity.ok(photos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }
     }
 }
