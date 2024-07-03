@@ -73,14 +73,16 @@ public class PhotoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }
     }
-
+    //Method to fetch profile photos for display on login and when posting messages
     @GetMapping("/profile")
-    public ResponseEntity<Photo> getProfilePhoto() {
-
-
+    public ResponseEntity<?> getProfilePhoto(Principal principal) {
         try {
-            photoService.
-
+            String username = principal.getName();
+            Photo profilePhoto = photoService.getProfilePhoto(username);
+            return ResponseEntity.ok(profilePhoto);
+        } catch (Exception e) {
+            log.error("Error fetching profile photo", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
