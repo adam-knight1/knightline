@@ -7,6 +7,7 @@ import org.knightline.repository.entity.Photo;
 import org.knightline.repository.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,15 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class PhotoService {
     private final S3Client s3Client;
     private final PhotoRepository photoRepository;
+    private UserRepository userRepository;
+
     private static final Logger log = LoggerFactory.getLogger(PhotoService.class);
     private final UserService userService;
 
@@ -157,6 +161,18 @@ public class PhotoService {
     public List<Photo> getAllPhotos() {
         return photoRepository.findAll();
     }
+
+    public Photo getProfilePhoto(String username) {
+        Optional<User> optionalUser = userRepository.findByEmail(username);
+        User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        String profilePictureUrl = user.getProfilePictureUrl();
+
+        Photo profilePhoto = new Photo();
+        profilePhoto.setUrl(profilePictureUrl);
+        return profilePhoto;
+    }
+
 
 }
 
