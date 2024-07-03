@@ -7,7 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import UserComponent from '../components/UserComponent';
 import Sidebar from '../components/Sidebar';
-import '../components/UserPageStyle.css';
+//import '../components/UserPageStyle.css';
+import styles from '../styles/Styles.css';
 
 const UserPage = () => {
   const [user, setUser] = useState(null);
@@ -54,7 +55,7 @@ const UserPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Photo is too large!  Please upload a smaller photo');
       }
 
       const data = await response.json();

@@ -1,8 +1,13 @@
+/*
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
 body {
-  font-family: 'Roboto', sans-serif; /* Apply the rounded modern font globally */
-  background-color: #e9ebee; /* Consistent background color */
+  font-family: 'Roboto', sans-serif; */
+/* Apply the rounded modern font globally *//*
+
+  background-color: #e9ebee; */
+/* Consistent background color *//*
+
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -28,15 +33,25 @@ ul {
 li {
   margin: 10px 0;
   cursor: pointer;
-  font-size: 18px; /* Consistent font size */
-  padding: 10px; /* Added some padding for better spacing */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
+  font-size: 18px; */
+/* Consistent font size *//*
+
+  padding: 10px; */
+/* Added some padding for better spacing *//*
+
+  transition: background-color 0.3s ease, color 0.3s ease; */
+/* Smooth transition for hover effect *//*
+
   border-radius: 8px;
 }
 
 li:hover {
-  background-color: #007BFF; /* Change background color on hover */
-  color: #ffffff; /* Change text color on hover */
+  background-color: #007BFF; */
+/* Change background color on hover *//*
+
+  color: #ffffff; */
+/* Change text color on hover *//*
+
 }
 
 .main-content {
@@ -50,16 +65,24 @@ li:hover {
 }
 
 h1 {
-    color: #5A8DEE; /* Light blue color */
-    font-family: 'Playfair Display', serif; /* Elegant font */
+    color: #5A8DEE; */
+/* Light blue color *//*
+
+    font-family: 'Playfair Display', serif; */
+/* Elegant font *//*
+
 }
 
 
 img {
   display: block;
   margin: 20px auto;
-  border-radius: 50%; /* Circular images */
-  width: 150px; /* Consistent image size */
+  border-radius: 100%; */
+/* Circular images *//*
+
+  width: 150px; */
+/* Consistent image size *//*
+
   height: 150px;
 }
 
@@ -69,15 +92,23 @@ input[type="file"] {
 
 .text-center {
   text-align: center;
-  color: yellow; /* Adding a light text color for better visibility on darker backgrounds */
+  color: yellow; */
+/* Adding a light text color for better visibility on darker backgrounds *//*
+
   background-color: #7E5BEF;
   padding: 20px;
-  border-radius: 40px; /* Rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 40px; */
+/* Rounded corners *//*
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+/* Subtle shadow for depth *//*
+
 }
 
 .text-2xl {
-  font-size: 512px; /* Larger text */
+  font-size: 512px; */
+/* Larger text *//*
+
 }
 
 .font-bold {
@@ -85,12 +116,16 @@ input[type="file"] {
 }
 
 .my-4 {
-  margin-top: 48px; /* More vertical space */
+  margin-top: 48px; */
+/* More vertical space *//*
+
   margin-bottom: 48px;
 }
 
 .w-24 {
-  width: 128px; /* Larger image */
+  width: 128px; */
+/* Larger image *//*
+
 }
 
 .h-24 {
@@ -98,7 +133,9 @@ input[type="file"] {
 }
 
 .rounded-full {
-  border-radius: 50%; /* Circular images */
+  border-radius: 50%; */
+/* Circular images *//*
+
 }
 
 .mx-auto {
@@ -108,7 +145,9 @@ input[type="file"] {
 
 .list-none {
   list-style-type: none;
-  padding-left: 0; /* Removed padding for a cleaner look */
+  padding-left: 0; */
+/* Removed padding for a cleaner look *//*
+
 }
 
 .p-0 {
@@ -120,12 +159,17 @@ input[type="file"] {
 }
 
 .space-y-2 > * + * {
-  margin-top: 12px; /* Increased space between list items */
+  margin-top: 12px; */
+/* Increased space between list items *//*
+
 }
 
 .hover\:underline:hover {
   text-decoration: underline;
-  color: #a78bfa; /* Changing text color on hover, a bit too dark blue still  */
+  color: #a78bfa; */
+/* Changing text color on hover, a bit too dark blue still  *//*
+
 }
+*/
 
 

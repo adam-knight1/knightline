@@ -16,7 +16,7 @@ const UserComponent = ({ user, onProfilePictureUpload }) => {
         <img
           src={user.imageUrl}
           alt={`${user.name}'s profile`}
-          style={{ borderRadius: '100%', width: '250px', height: '250px' }}
+          style={{ borderRadius: '10%', width: '250px', height: '250px' }}
         />
       )}
       <input type="file" onChange={handleFileChange} accept="image/*" />
