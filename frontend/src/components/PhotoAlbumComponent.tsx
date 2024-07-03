@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Gallery } from 'react-grid-gallery';
+import { LightgalleryProvider, LightgalleryItem } from 'react-lightgallery';
 import axios from 'axios';
 import styled from 'styled-components';
+import 'lightgallery.js/dist/css/lightgallery.css';
 import { useRouter } from 'next/router';
 
 const GalleryContainer = styled.div`
@@ -54,10 +55,7 @@ const PhotoAlbumComponent = () => {
 
         const photoData = response.data.map(photo => ({
           src: photo.url,
-          thumbnail: photo.url,
-          thumbnailWidth: 320,
-          thumbnailHeight: 212,
-          caption: `${photo.title || ''} - ${photo.description || ''}`
+          thumb: photo.url,
         }));
 
         setPhotos(photoData);
@@ -70,15 +68,19 @@ const PhotoAlbumComponent = () => {
     fetchPhotos();
   }, []);
 
-  useEffect(() => {
-    console.log("Photos to render: ", photos);
-  }, [photos]);
-
   return (
     <GalleryContainer>
       <BackButton onClick={() => router.back()}>Back</BackButton>
       <Title>Family Photo Album</Title>
-      <Gallery images={photos} />
+      <LightgalleryProvider>
+        <div className="photo-grid">
+          {photos.map((photo, index) => (
+            <LightgalleryItem key={index} group="group1" src={photo.src}>
+              <img src={photo.thumb} alt={`photo-${index}`} style={{ width: '200px', margin: '10px' }} />
+            </LightgalleryItem>
+          ))}
+        </div>
+      </LightgalleryProvider>
     </GalleryContainer>
   );
 };

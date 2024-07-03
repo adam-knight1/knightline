@@ -6,6 +6,9 @@
     "@fullcalendar/timegrid": "^6.1.14",
     "axios": "^1.7.2",
     "babel-plugin-styled-components": "^2.1.4",
+    "lightgallery": "^2.7.2",
+    "lightgallery.js": "^1.4.0",
+    "react-lightgallery": "^0.9.0",
     "react-photo-gallery": "^8.0.0",
     "styled-components": "^6.1.11"
   }
