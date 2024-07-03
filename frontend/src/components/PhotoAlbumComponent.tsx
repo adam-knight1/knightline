@@ -83,6 +83,7 @@ const Image = styled.img`
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 0;
 `;
 
 const PhotoAlbumComponent = () => {
