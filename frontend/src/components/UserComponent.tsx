@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import fetchProfilePhoto from '../components/FetchProfilePhoto'
 
 const UserComponent = ({ user, onProfilePictureUpload }) => {
   const [file, setFile] = useState(null);
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState(user.imageUrl || '');
+
+  useEffect(() => {
+    if (!profilePhotoUrl) {
+      const getProfilePhoto = async () => {
+        const photoUrl = await fetchProfilePhoto();
+        setProfilePhotoUrl(photoUrl);
+      };
+
+      getProfilePhoto();
+    }
+  }, [profilePhotoUrl]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -12,9 +25,9 @@ const UserComponent = ({ user, onProfilePictureUpload }) => {
   return (
     <div className="user-profile">
       <h1>Welcome to Knightline, {user.name}!</h1>
-      {user.imageUrl && (
+      {profilePhotoUrl && (
         <img
-          src={user.imageUrl}
+          src={profilePhotoUrl}
           alt={`${user.name}'s profile`}
           style={{ borderRadius: '10%', width: '250px', height: '250px' }}
         />
@@ -25,5 +38,3 @@ const UserComponent = ({ user, onProfilePictureUpload }) => {
 };
 
 export default UserComponent;
-
-

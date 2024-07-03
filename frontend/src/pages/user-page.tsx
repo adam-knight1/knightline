@@ -7,8 +7,33 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import UserComponent from '../components/UserComponent';
 import Sidebar from '../components/Sidebar';
-//import '../components/UserPageStyle.css';
 import styles from '../styles/Styles.css';
+import axios from 'axios';
+
+const fetchProfilePhoto = async () => {
+  const authToken = localStorage.getItem('authToken');
+  if (!authToken) {
+    alert('No auth token found, please log in.');
+    return;
+  }
+
+  try {
+    const response = await axios.get('http://localhost:8080/photos/profile', {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (response.status === 200) {
+      const photoUrl = response.data.url;
+      return photoUrl;
+    } else {
+      throw new Error('Failed to fetch profile photo');
+    }
+  } catch (error) {
+    console.error('Error fetching profile photo:', error);
+  }
+};
 
 const UserPage = () => {
   const [user, setUser] = useState(null);
@@ -18,7 +43,8 @@ const UserPage = () => {
     const userData = localStorage.getItem('user');
     try {
       if (userData) {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
       } else {
         console.error('No user data found in local storage');
         router.push('/login'); // Redirect to login if no user data found
@@ -31,7 +57,15 @@ const UserPage = () => {
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      const updateProfilePhoto = async () => {
+        const photoUrl = await fetchProfilePhoto();
+        setUser((prevUser) => {
+          const updatedUser = { ...prevUser, imageUrl: photoUrl };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          return updatedUser;
+        });
+      };
+      updateProfilePhoto();
     }
   }, [user]);
 
@@ -55,7 +89,7 @@ const UserPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Photo is too large!  Please upload a smaller photo');
+        throw new Error('Photo is too large! Please upload a smaller photo');
       }
 
       const data = await response.json();
