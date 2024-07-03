@@ -55,7 +55,7 @@ const PhotoUploadForm = () => {
         },
       });
       alert('Photo uploaded successfully!');
-      // Optionally refresh the gallery or clear the form
+      // optionally refresh the gallery or clear the form
     } catch (error) {
       console.error("There was an error uploading the photo!", error);
       alert(`Error: ${error.message}`);
