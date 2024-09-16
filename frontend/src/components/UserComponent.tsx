@@ -26,7 +26,7 @@ const UserComponent = ({ user, onProfilePictureUpload }) => {
 
   return (
     <div className="user-profile">
-      <h1>Welcome to Knightline, {user.name}!</h1>
+      <h1>Hi there, {user.name}!</h1>
       {profilePhotoUrl && (
         <img
           src={profilePhotoUrl}

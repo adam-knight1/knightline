@@ -48,7 +48,7 @@ const HomePage = () => {
 export default HomePage; */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import '../styles/Styles.css'; // Ensure this import
+import '../styles/Styles.css';
 
 const HomePage = () => {
   const [user, setUser] = useState(null);

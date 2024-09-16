@@ -120,7 +120,7 @@ const PhotoAlbumComponent = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/photos/get', {  //another local placeholer pending deployment
+        const response = await axios.get('http://localhost:8080/photos/get', {  //another local placeholder pending deployment
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
