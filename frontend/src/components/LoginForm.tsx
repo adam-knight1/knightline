@@ -11,13 +11,13 @@
  const LoginForm = () => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
-   const [error, setError] = useState(''); // State to hold error messages
+   const [error, setError] = useState(''); // State to hold any error messages
    const router = useRouter();
 
    const handleSubmit = async (event: FormEvent) => {
      event.preventDefault(); // preventing default form submission
      try {
-       const response = await axios.post('http://localhost:8080/auth/login', { email, password });
+       const response = await axios.post('http://localhost:8080/auth/login', { email, password }); //local placeholder
        console.log('Login successful:', response.data);
 
        const token = response.data.token;

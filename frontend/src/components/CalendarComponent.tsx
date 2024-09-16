@@ -16,16 +16,16 @@ const CalendarComponent = forwardRef((props, ref) => {
         }
 
         try {
-            const response = await axios.get('http://localhost:8080/calendar/events', {
+            const response = await axios.get('http://localhost:8080/calendar/events', { //local placeholder
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
             });
 
             const fetchedEvents = response.data.map(event => {
-                console.log('Raw eventTime:', event.eventTime); // Log raw eventTime
+                console.log('Raw eventTime:', event.eventTime); // Logging raw eventTime
 
-                // Convert eventTime to a valid Date object
+                // Converting eventTime to a valid Date object
                 const eventTime = new Date(event.eventTime);
                 if (isNaN(eventTime.getTime())) {
                     console.error('Invalid eventTime format:', event.eventTime);
@@ -35,13 +35,13 @@ const CalendarComponent = forwardRef((props, ref) => {
                 return {
                     id: event.id,
                     title: event.title,
-                    start: eventTime.toISOString(), // Ensure correct format
+                    start: eventTime.toISOString(), // Ensuring correct format
                     description: event.description,
                     location: event.location,
                 };
             }).filter(event => event !== null); // Filter out invalid events
 
-            console.log('Formatted events:', fetchedEvents); // Log formatted events
+            console.log('Formatted events:', fetchedEvents); // Logging formatted events
 
             setEvents(fetchedEvents);
         } catch (error) {

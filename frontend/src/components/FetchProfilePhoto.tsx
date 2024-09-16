@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+//Component to fetch profile photo upon login, should persist through sessions but currently error-prone
+
 const fetchProfilePhoto = async () => {
   const authToken = localStorage.getItem('authToken');
   if (!authToken) {
@@ -8,7 +10,7 @@ const fetchProfilePhoto = async () => {
   }
 
   try {
-    const response = await axios.get('http://localhost:8080/photos/profile', {
+    const response = await axios.get('http://localhost:8080/photos/profile', {  //Possible source of error
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -22,7 +24,9 @@ const fetchProfilePhoto = async () => {
     }
   } catch (error) {
     console.error('Error fetching profile photo:', error);
+    throw error;
   }
 };
 
 export default fetchProfilePhoto;
+

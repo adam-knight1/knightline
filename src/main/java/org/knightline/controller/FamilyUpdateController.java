@@ -39,7 +39,7 @@ public class FamilyUpdateController {
 
     //todo - change to use FamilyUpdateDto
 
-    @PostMapping("/post-update")
+    /*@PostMapping("/post-update")
     public ResponseEntity<FamilyUpdateDto> postUpdate(@RequestBody FamilyUpdateDto familyUpdateDto, Principal principal) {
         User user = userService.findUserByEmail(principal.getName());
         familyUpdateService.postUpdate(user,familyUpdateDto.getBody()); //removed unused FamilyUpdate variable to catch response, using dto instead
@@ -50,7 +50,21 @@ public class FamilyUpdateController {
         response.setCreatedAt(familyUpdateDto.getCreatedAt());
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }*/
+
+    @PostMapping("/post-update")
+    public ResponseEntity<FamilyUpdateDto> postUpdate(@RequestBody FamilyUpdateDto familyUpdateDto, Principal principal) {
+        User user = userService.findUserByEmail(principal.getName());
+        FamilyUpdate update = familyUpdateService.postUpdate(user, familyUpdateDto.getBody());
+
+        FamilyUpdateDto response = new FamilyUpdateDto();
+        response.setBody(update.getBody());
+        response.setUser(new UserDto(user.getUserId(), user.getName(), user.getEmail(), user.getProfilePictureUrl()));
+        response.setCreatedAt(update.getCreatedAt());
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 
     /** Retrieves all messages posted on the update board, to be displayed on the front end
      *

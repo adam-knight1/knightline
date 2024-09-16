@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import fetchProfilePhoto from '../components/FetchProfilePhoto'
+import fetchProfilePhoto from '../components/fetchProfilePhoto';
 
 const UserComponent = ({ user, onProfilePictureUpload }) => {
   const [file, setFile] = useState(null);
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState(user.imageUrl || '');
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
 
   useEffect(() => {
-    if (!profilePhotoUrl) {
-      const getProfilePhoto = async () => {
+    const getProfilePhoto = async () => {
+      try {
         const photoUrl = await fetchProfilePhoto();
         setProfilePhotoUrl(photoUrl);
-      };
+      } catch (error) {
+        console.error('Failed to fetch profile photo:', error);
+      }
+    };
 
-      getProfilePhoto();
-    }
-  }, [profilePhotoUrl]);
+    getProfilePhoto();
+  }, []);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];

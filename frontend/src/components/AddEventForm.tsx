@@ -22,7 +22,7 @@ const AddEventForm = ({ refreshEvents }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/calendar/create', newEvent, {
+            const response = await axios.post('http://localhost:8080/calendar/create', newEvent, { //will update when deploying
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -30,7 +30,7 @@ const AddEventForm = ({ refreshEvents }) => {
 
             console.log('Event added:', response.data);
             refreshEvents(); // Call the function to refresh events
-            // Optionally reset form fields here
+            // Optionally reset form fields here maybe
         } catch (error) {
             console.error("There was an error adding the event!", error);
             alert(`Error: ${error.message}`);

@@ -78,7 +78,7 @@ const FamilyUpdateComponent = () => {
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/updates/retrieve-all');
+        const response = await axios.get('http://localhost:8080/updates/retrieve-all'); //pre-deploy placeholder
         setUpdates(response.data);
       } catch (error) {
         console.error('Error fetching updates:', error);

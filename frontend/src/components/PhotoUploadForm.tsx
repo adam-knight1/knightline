@@ -10,11 +10,11 @@ const PhotoUploadForm = () => {
     if (imageFile) {
       Resizer.imageFileResizer(
         imageFile,
-        800, // max width
+        800, // max width for now
         800, // max height
         'JPEG',
-        80, // quality
-        0, // rotation
+        80, // quality fine for now
+        0, // rotation straight
         (uri) => {
           const byteString = atob(uri.split(',')[1]);
           const ab = new ArrayBuffer(byteString.length);
@@ -55,7 +55,7 @@ const PhotoUploadForm = () => {
         },
       });
       alert('Photo uploaded successfully!');
-      // optionally refresh the gallery or clear the form
+      // optionally refresh the gallery or clear the form, this may be where my issue is from
     } catch (error) {
       console.error("There was an error uploading the photo!", error);
       alert(`Error: ${error.message}`);

@@ -3,9 +3,12 @@
 package org.knightline.controller;
 
 import org.knightline.repository.entity.Photo;
+import org.knightline.repository.entity.User;
 import org.knightline.service.PhotoService;
+import org.knightline.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +24,20 @@ import java.util.Map;
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {
+    @Autowired
     private final PhotoService photoService;
-    Logger log = LoggerFactory.getLogger(PhotoController.class);
+    @Autowired
+    private UserService userService;
 
+    Logger log = LoggerFactory.getLogger(PhotoController.class);
+    @Autowired
     public PhotoController(PhotoService photoservice) {
         this.photoService = photoservice;
+    }
+
+    public PhotoController(PhotoService photoService, UserService userService) { //Adding this constructor to troubleshoot null userService
+        this.photoService = photoService;
+        this.userService = userService;
     }
 
     @PostMapping("/upload")
@@ -44,7 +56,7 @@ public class PhotoController {
         }
 
         try {
-            String photoUrl = photoService.uploadPhoto(file, principal.getName());
+            String photoUrl = photoService.uploadPhoto(file, principal.getName());  //todo - The issue could be in initial upload
             log.info("Photo uploaded successfully: {}", photoUrl);
             return ResponseEntity.ok().body(Map.of("url", photoUrl));
         } catch (Exception e) {
@@ -52,7 +64,6 @@ public class PhotoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-
 
     @PostMapping("/upload/profile")
     public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file, Principal principal) {
@@ -74,14 +85,30 @@ public class PhotoController {
         }
     }
     //Method to fetch profile photos for display on login and when posting messages
-    @GetMapping("/profile")
+    @GetMapping("/profile") //todo - Profile photo is not persisting through session termination
     public ResponseEntity<?> getProfilePhoto(Principal principal) {
         try {
-            String username = principal.getName();
-            Photo profilePhoto = photoService.getProfilePhoto(username);
-            return ResponseEntity.ok(profilePhoto);
+            if (principal == null || principal.getName() == null) {
+                log.error("No authenticated user found.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No authenticated user found.");
+            }
+
+            User user = userService.findUserByEmail(principal.getName());  //todo - check service method, userService is null?
+            if (user == null) {
+                log.error("User not found for email: {}", principal.getName());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            String profilePhotoUrl = user.getProfilePictureUrl(); //todo - check here as well
+            if (profilePhotoUrl == null) {
+                log.error("Profile photo not found for user: {}", principal.getName());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Profile photo not found");
+            }
+
+            log.info("Profile photo URL: {}", profilePhotoUrl);
+            return ResponseEntity.ok().body(Map.of("url", profilePhotoUrl)); //todo - Let's  check logged URL and see if the issue is here.
         } catch (Exception e) {
-            log.error("Error fetching profile photo", e);
+            log.error("Error retrieving profile photo", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
