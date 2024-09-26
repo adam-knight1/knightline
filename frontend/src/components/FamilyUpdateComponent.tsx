@@ -9,6 +9,20 @@ const UpdatesContainer = styled.div`
   padding: 20px;
 `;
 
+const BackButton = styled.button`
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 const UpdateForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -128,6 +142,7 @@ const FamilyUpdateComponent = () => {
           </MessageItem>
         ))}
       </MessageList>
+      <BackButton onClick={() => router.back()}>Back</BackButton> //todo - I just added this, may need to delete
     </UpdatesContainer>
   );
 };

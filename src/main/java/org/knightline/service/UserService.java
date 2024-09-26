@@ -73,6 +73,10 @@ public class UserService {
         return new UserDto(user.getUserId(), user.getName(), user.getEmail(), user.getProfilePictureUrl());
     }
 
+/*
+    public UserDto modifyUsername()
+*/
+
     public void updateUser(User user) {
         userRepository.save(user);
     }

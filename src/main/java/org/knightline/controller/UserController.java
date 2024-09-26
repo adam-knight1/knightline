@@ -48,4 +48,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching user data");
         }
     }
+
+   /* PostMapping("/userchange")
+    public ResponseEntity<?> changeUsername(@PathVariable UUID userId) {
+        try {
+            UserDto userDto = userService.getUserData(userId);
+
+        }
+    }*/
 }

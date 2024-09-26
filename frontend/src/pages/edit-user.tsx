@@ -6,6 +6,7 @@ const EditUserPage = () => {
     return (
         <div>
         Edit User Details
+            <h1>Change Username</h1>
             <h1>Change password</h1>
             <h1>Delete Account</h1>
         </div>

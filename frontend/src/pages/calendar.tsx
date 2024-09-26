@@ -15,7 +15,7 @@ const CalendarPage = () => {
     };
 
     const handleBack = () => {
-        router.push('/user-page'); // Adjust the path as needed
+        router.push('/user-page'); // This will probably stay as is for now, unless I change the overall site configuration
     };
 
     return (

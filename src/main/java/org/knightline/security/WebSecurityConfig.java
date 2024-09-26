@@ -46,8 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/**",  "/users/**").permitAll() // allow unauthenticated access to auth endpoints, currently all user endpoints but will change to just create
-                .antMatchers("/calendar/**" , "/photos/**", "/updates/**").authenticated()
+                .antMatchers("/auth/**", "/users/**", "/updates/**").permitAll() // allow unauthenticated access to auth endpoints, currently all user endpoints but will change to just create
+                .antMatchers("/calendar/**" , "/photos/**").authenticated()
                 .anyRequest().authenticated()  // Other requests require authentication
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

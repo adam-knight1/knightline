@@ -33,7 +33,7 @@ public class CalendarController {
         User user = userService.findUserByEmail(principal.getName());
         UserDto userDto = new UserDto(user.getUserId(), user.getName(), user.getEmail(), user.getProfilePictureUrl());
 
-        // Convert eventTime from String to ZonedDateTime
+        // Converting eventTime from String to ZonedDateTime
         CalendarEvent newEvent = calendarService.createCalendarEvent(
                 user,
                 calendarEventDto.getTitle(),
@@ -46,7 +46,7 @@ public class CalendarController {
         responseDto.setId(newEvent.getId());
         responseDto.setTitle(newEvent.getTitle());
         responseDto.setDescription(newEvent.getDescription());
-        responseDto.setEventTime(newEvent.getEventTime().toString());  // convert back to String if needed
+        responseDto.setEventTime(newEvent.getEventTime().toString());  // converting back to String in my current set ip
         responseDto.setUser(userDto);
 
         return ResponseEntity.ok(responseDto);
@@ -55,7 +55,7 @@ public class CalendarController {
     @GetMapping("/events")
     public ResponseEntity<List<CalendarEventDto>> getAllEvents() {
         List<CalendarEvent> events = calendarService.getAllEvents();
-        System.out.println("Fetched events: " + events.size()); // Log number of events fetched
+        System.out.println("Fetched events: " + events.size()); // Logging number of events fetched
         List<CalendarEventDto> eventDtos = events.stream().map(event -> {
             CalendarEventDto dto = new CalendarEventDto();
             dto.setId(event.getId());
