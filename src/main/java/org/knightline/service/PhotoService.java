@@ -37,9 +37,9 @@ public class PhotoService {
         this.userService = userService;
     }
 
-    public String uploadPhoto(MultipartFile file, String email) throws IOException {
+    public String uploadPhoto(MultipartFile file, String email) throws IOException { //todo revisit this is and
         System.out.println("Reached service");
-        String bucketName = "knightlinephotos";
+        String bucketName = "knightfamphotos";
         String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
         String region = "us-east-1";
 
@@ -48,7 +48,7 @@ public class PhotoService {
                 .key(s3Key)
                 .build();
 
-        //uploading file to S3
+        //upload file to S3
         s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
         // Constructing the URL for the uploaded file
@@ -75,8 +75,8 @@ public class PhotoService {
         }
 
         Photo photo = new Photo();
-        photo.setTitle("Some title"); // set by user
-        photo.setDescription("Some description"); // set by user
+        photo.setTitle("Some title"); // title + description set by user
+        photo.setDescription("Some description");
         photo.setUrl(photoUrl); // The URL generated after upload
         photo.setS3ObjectKey(s3Key); // The key used to store the photo in S3
         photo.setUser(user); //user who uploaded the photo
@@ -92,8 +92,8 @@ public class PhotoService {
 
         System.out.println("reached profile service here");
 
-        String bucketName = "knightlinephotos";
-        //String directoryPrefix = "profile-pictures/"; // Specific directory for profile pictures
+        String bucketName = "knightfamphotos";
+        //String directoryPrefix = "profile-pictures/"; // Specific directory for profile pictures //todo this is working as is with these two lines commented out
         //String s3Key = directoryPrefix + generateUniqueKey(file.getOriginalFilename(), email);
         String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
 
@@ -109,7 +109,7 @@ public class PhotoService {
         log.info("Uploading file to S3");
 
         try {
-            // Upload file to S3 directly from an InputStream
+            // Uploading file to S3 directly from an InputStream
             s3Client.putObject(putObjectRequest, software.amazon.awssdk.core.sync.RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
         } catch (Exception e) {
             log.error("Error uploading file to S3", e);
@@ -155,7 +155,7 @@ public class PhotoService {
 
         //using username and time for uniqueness
 
-        return String.format("%s_%s_%s.%s", username, baseName, UUID.randomUUID().toString(), fileExtension);
+        return String.format("%s_%s_%s.%s", username, baseName, UUID.randomUUID(), fileExtension); //removed redundant toString call 9/26
     }
 
     public List<Photo> getAllPhotos() {
@@ -172,7 +172,5 @@ public class PhotoService {
         profilePhoto.setUrl(profilePictureUrl);
         return profilePhoto;
     }
-
-
 }
 

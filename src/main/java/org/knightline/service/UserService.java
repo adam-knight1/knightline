@@ -28,17 +28,35 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /** Creates a new user on the create user page accessed from the main landing page
+     * Uses a password encoder for an extra layer of security.
+     *
+     * @param user
+     * @return User object
+     */
     public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         logger.info("Saving user with name: {}", user.getName());
         return userRepository.save(user);
     }
 
-    public User findUserByUsername(String username) { //todo correct!
+    /**
+     *
+     * @param username
+     * @return User Object
+     * This method needs some revision as it's currently using findByEmail with the username, which is confusing and incorrect
+     */
+
+    public User findUserByUsername(String username) { //todo get this aligned with username or email
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
+    /**
+     * Method to find user by email
+     * @param email
+     * @return
+     */
     public User findUserByEmailUserDto(String email){
 
        User user = userRepository.findByEmail(email)
@@ -74,7 +92,7 @@ public class UserService {
     }
 
 /*
-    public UserDto modifyUsername()
+    public UserDto modifyUsername()  //todo - edit username
 */
 
     public void updateUser(User user) {
