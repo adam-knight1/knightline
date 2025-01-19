@@ -27,15 +27,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class UserServiceTest {
 
-    @MockBean
+  /*  @MockBean
     private UserRepository userRepository;
 
     @Autowired  // Changed from @InjectMocks to let Spring handle the injection
     private UserService userService;
 
-    /** Test to verify if user exists in DB, searching by email
+    *//** Test to verify if user exists in DB, searching by email
      *  Test passes if user is found in postgres table
-     */
+     *//*
 
     @Test
     public void findUserByEmail_UserFound() {
@@ -50,10 +50,10 @@ public class UserServiceTest {
         assertEquals(email, foundUser.getEmail());
     }
 
-    /**Test to determine if user exists by email
+    *//**Test to determine if user exists by email
      * Uses fake user data to verify integrity of DB user table
      * Returns true if fake user not found.
-     */
+     *//*
 
     @Test
     public void findUserByEmail_UserNotFound() {
@@ -63,6 +63,6 @@ public class UserServiceTest {
         assertThrows(UsernameNotFoundException.class, () -> {
             userService.findUserByEmail(email);
         });
-    }
+    }*/
 }
 

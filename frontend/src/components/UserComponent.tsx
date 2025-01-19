@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import fetchProfilePhoto from '../components/fetchProfilePhoto';
+import FetchProfilePhoto from '../components/FetchProfilePhoto';
 
 const UserComponent = ({ user, onProfilePictureUpload }) => {
   const [file, setFile] = useState(null);

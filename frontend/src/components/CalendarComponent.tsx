@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const CalendarComponent = forwardRef((props, ref) => {
     const [events, setEvents] = useState([]);
+    CalendarComponent.displayName = "CalendarComponent";
 
     const fetchEvents = useCallback(async () => {
         const authToken = localStorage.getItem('authToken');

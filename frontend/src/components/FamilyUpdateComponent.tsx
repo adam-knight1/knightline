@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
 const UpdatesContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,14 +90,16 @@ const MessageBody = styled.p`
 const FamilyUpdateComponent = () => {
   const [updates, setUpdates] = useState([]);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/updates/retrieve-all'); //pre-deploy placeholder
+        const response = await axios.get(`${BACKEND_URL}/updates/retrieve-all`);
         setUpdates(response.data);
       } catch (error) {
-        console.error('Error fetching updates:', error);
+        setError('Error fetching updates. Please try again later.');
+        console.error(error);
       }
     };
 
@@ -105,6 +109,11 @@ const FamilyUpdateComponent = () => {
   const handlePostUpdate = async (event) => {
     event.preventDefault();
 
+    if (!message.trim()) {
+      alert('Message cannot be empty!');
+      return;
+    }
+
     const authToken = localStorage.getItem('authToken');
     if (!authToken) {
       alert('No auth token found, please log in.');
@@ -112,39 +121,23 @@ const FamilyUpdateComponent = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/updates/post-update', { body: message }, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/updates/post-update`,
+        { body: message },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       setUpdates([response.data, ...updates]);
       setMessage('');
     } catch (error) {
-      console.error('Error posting update:', error);
+      setError('Error posting update. Please try again later.');
+      console.error(error);
     }
   };
 
   return (
-    <UpdatesContainer>
-      <UpdateForm onSubmit={handlePostUpdate}>
-        <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="What's on your mind?" />
-        <SubmitButton type="submit">Post Update</SubmitButton>
-      </UpdateForm>
-      <MessageList>
-        {updates.map((update) => (
-          <MessageItem key={update.id}>
-            <ProfileImage src={update.user.profilePictureUrl} alt={`${update.user.name}'s profile`} />
-            <MessageContent>
-              <MessageAuthor>{update.user.name}</MessageAuthor>
-              <MessageBody>{update.body}</MessageBody>
-            </MessageContent>
-          </MessageItem>
-        ))}
-      </MessageList>
-      <BackButton onClick={() => router.back()}>Back</BackButton> //todo - I just added this, may need to delete
-    </UpdatesContainer>
-  );
-};
-
-export default FamilyUpdateComponent;
+    <UpdatesContaine
