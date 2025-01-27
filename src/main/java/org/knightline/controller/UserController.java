@@ -49,11 +49,5 @@ public class UserController {
         }
     }
 
-   /* PostMapping("/userchange")
-    public ResponseEntity<?> changeUsername(@PathVariable UUID userId) {
-        try {
-            UserDto userDto = userService.getUserData(userId);
 
-        }
-    }*/
 }

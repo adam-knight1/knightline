@@ -10,8 +10,8 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 
-# Download the dependencies (use gradle to cache dependencies)
-RUN ./gradlew build --no-daemon
+# Download the dependencies and cache them
+RUN ./gradlew dependencies --no-daemon
 
 # Copy the application source code
 COPY src src
@@ -30,6 +30,9 @@ COPY --from=build /app/build/libs/*.jar app.jar
 
 # Expose the application port (change if needed)
 EXPOSE 8080
+
+# Add a health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s CMD curl -f http://localhost:8080/actuator/health || exit 1
 
 # Command to run the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]

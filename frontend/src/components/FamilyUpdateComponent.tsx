@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -87,10 +87,21 @@ const MessageBody = styled.p`
   margin: 0;
 `;
 
-const FamilyUpdateComponent = () => {
-  const [updates, setUpdates] = useState([]);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState(null);
+interface Author {
+  profilePictureUrl: string;
+  name: string;
+}
+
+interface Update {
+  id: string;
+  body: string;
+  author: Author;
+}
+
+const FamilyUpdateComponent: React.FC = () => {
+  const [updates, setUpdates] = useState<Update[]>([]);
+  const [message, setMessage] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUpdates = async () => {
@@ -106,7 +117,7 @@ const FamilyUpdateComponent = () => {
     fetchUpdates();
   }, []);
 
-  const handlePostUpdate = async (event) => {
+  const handlePostUpdate = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!message.trim()) {
@@ -140,4 +151,34 @@ const FamilyUpdateComponent = () => {
   };
 
   return (
-    <UpdatesContaine
+    <UpdatesContainer>
+      <BackButton onClick={() => window.history.back()}>Back</BackButton>
+
+      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+
+      <UpdateForm onSubmit={handlePostUpdate}>
+        <TextArea
+          placeholder="Write an update..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+        />
+        <SubmitButton type="submit">Post Update</SubmitButton>
+      </UpdateForm>
+
+      <MessageList>
+        {updates.map((update) => (
+          <MessageItem key={update.id}>
+            <ProfileImage src={update.author.profilePictureUrl} alt="Profile" />
+            <MessageContent>
+              <MessageAuthor>{update.author.name}</MessageAuthor>
+              <MessageBody>{update.body}</MessageBody>
+            </MessageContent>
+          </MessageItem>
+        ))}
+      </MessageList>
+    </UpdatesContainer>
+  );
+};
+
+export default FamilyUpdateComponent;

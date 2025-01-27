@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import ImageGallery from 'react-image-gallery';
+import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';  // Import ReactImageGalleryItem type
 import "react-image-gallery/styles/css/image-gallery.css";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
+interface Photo extends ReactImageGalleryItem {
+  description?: string;
+  original: string; // Ensure 'original' is a string URL or path
+  thumbnail: string; // Ensure 'thumbnail' is a string URL or path
+}
 
 const PageContainer = styled.div`
   display: flex;
@@ -107,8 +115,8 @@ const Image = styled.img`
 `;
 
 const PhotoAlbumComponent = () => {
-  const [photos, setPhotos] = useState([]);
-  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -120,15 +128,15 @@ const PhotoAlbumComponent = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/photos/get', {  //another local placeholder pending deployment
+        const response = await axios.get('http://localhost:8080/photos/get', {  // Another local placeholder pending deployment
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         });
 
-        const photoData = response.data.map(photo => ({
-          original: photo.url,
-          thumbnail: photo.url,
+        const photoData: Photo[] = response.data.map((photo: any) => ({
+          original: photo.url,      // Ensure this URL is correct for the full image
+          thumbnail: photo.url,     // Ensure this URL is correct for the thumbnail
           description: `${photo.title || ''} - ${photo.description || ''}`,
         }));
 
@@ -175,7 +183,7 @@ const PhotoAlbumComponent = () => {
           }}
         >
           <ImageGallery
-            items={photos}
+            items={photos}  // Now this is properly typed
             startIndex={selectedPhotoIndex}
             onScreenChange={fullScreen => {
               if (!fullScreen) setSelectedPhotoIndex(null);

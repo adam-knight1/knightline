@@ -1,4 +1,7 @@
 import axios from 'axios';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
+
 
 //Component to fetch profile photo upon login, should persist through sessions but currently error-prone
 

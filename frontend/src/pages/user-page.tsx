@@ -1,17 +1,19 @@
-/** user-page class handles functions such as retrieving the user from storage
-    and the auth token to allow for interactions with the various user page APIs
-    such as uploading a profile picture and navigating the side bar menu **/
-
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import UserComponent from '../components/UserComponent';
 import Sidebar from '../components/Sidebar';
-import fetchProfilePhoto from '../components/fetchProfilePhoto';
+import fetchProfilePhoto from '../components/FetchProfilePhoto';
 import styles from '../styles/Styles.css';
 
+interface User {
+  name: string;
+  imageUrl?: string; // Added optional imageUrl property for the profile picture
+}
+
+const BACKEND_URL = 'http://localhost:8080'; // Updated BACKEND_URL
+
 const UserPage = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const UserPage = () => {
     }
   }, [user]);
 
-  const handleProfilePictureUpload = async (file) => {
+  const handleProfilePictureUpload = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -46,7 +48,7 @@ const UserPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/photos/upload/profile', {
+      const response = await fetch(`${BACKEND_URL}/photos/upload/profile`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -55,24 +57,30 @@ const UserPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Photo is too large! Please upload a smaller photo');
+        throw new Error('Photo is too large! Please upload a smaller photo.');
       }
 
       const data = await response.json();
       setUser((prev) => {
+        if (!prev) return null; // Handle null case safely
         const updatedUser = { ...prev, imageUrl: data.url };
         localStorage.setItem('user', JSON.stringify(updatedUser)); // Update local storage
         return updatedUser;
       });
       alert('Profile picture updated successfully!');
     } catch (error) {
-      alert(`Error: ${error.message}`);
-      console.error('Upload failed:', error);
+      if (error instanceof Error) {
+        alert(`Error: ${error.message}`);
+        console.error('Upload failed:', error.message);
+      } else {
+        alert('An unexpected error occurred.');
+        console.error('Upload failed:', error);
+      }
     }
   };
 
   if (!user) {
-    return null; // Or a loading indicator maybe
+    return null; // Consider adding a loading indicator here
   }
 
   return (
