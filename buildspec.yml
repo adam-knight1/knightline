@@ -2,25 +2,22 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      docker: 20
     commands:
       - echo Installing dependencies...
-      # Add any necessary dependency installation commands here (e.g., apt-get install)
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 913524908137.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
-      - echo Building frontend Docker image...
-      - docker build --build-arg REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com -t knightline/frontend-image .
+      - echo Building backend Docker image...
+      - docker build -t knightline/backend-image .
       - echo Tagging the image...
-      - docker tag knightline/frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
+      - docker tag knightline/backend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/backend-image:latest
   post_build:
     commands:
       - echo Pushing image to ECR...
-      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
+      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/backend-image:latest
 
 artifacts:
   files:

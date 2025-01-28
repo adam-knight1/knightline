@@ -1,5 +1,5 @@
-# Use the official OpenJDK image from Docker Hub as the base image
-FROM openjdk:17-jdk-slim AS build
+# Stage 0: Build the app
+FROM 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/openjdk:17-jdk-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -19,8 +19,8 @@ COPY src src
 # Build the project (this will create the JAR file)
 RUN ./gradlew bootJar --no-daemon
 
-# Use a smaller image to run the JAR file
-FROM openjdk:17-jdk-slim
+# Stage 1: Run the app
+FROM 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/openjdk:17-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -28,7 +28,7 @@ WORKDIR /app
 # Copy the built JAR file from the previous image
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Expose the application port (change if needed)
+# Expose the application port
 EXPOSE 8080
 
 # Add a health check
