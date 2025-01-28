@@ -1,19 +1,24 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - echo Installing dependencies for frontend...
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 913524908137.dkr.ecr.us-east-1.amazonaws.com
-      - echo Pulling base image from ECR with the correct platform...
-      - docker pull --platform linux/amd64 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/openjdk:17-jdk-slim
   build:
     commands:
-      - echo Building frontend Docker image with the correct platform...
-      - docker build --platform linux/amd64 --build-arg REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com -t frontend-image .
+      - echo Building frontend Docker image...
+      - docker build --platform linux/amd64 --build-arg REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com -t frontend-image frontend/ # Ensure the frontend Dockerfile is in `frontend/`
       - echo Tagging the image...
       - docker tag frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
   post_build:
     commands:
-      - echo Pushing image to ECR...
+      - echo Pushing frontend image to ECR...
       - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
+
+artifacts:
+  files:
+    - '**/*' # Optional: Include any output artifacts, if needed.

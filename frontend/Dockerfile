@@ -20,8 +20,8 @@ COPY . .
 # Build the Next.js app for production
 RUN npm run build
 
-# Stage 1: Run the app using your ECR-hosted base image
-FROM 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/openjdk:17-jdk-slim
+# Stage 1: Run the app
+FROM node:18-alpine
 
 # Set the working directory
 WORKDIR /app

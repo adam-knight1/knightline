@@ -1,5 +1,5 @@
 # Stage 0: Build the app
-FROM 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/openjdk:17-jdk-slim AS build
+FROM openjdk:17-jdk-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY src src
 RUN ./gradlew bootJar --no-daemon
 
 # Stage 1: Run the app
-FROM 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/openjdk:17-jdk-slim
+FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
