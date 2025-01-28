@@ -5,6 +5,7 @@ import Resizer from 'react-image-file-resizer';
 // Define the type for the file state
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 //We'll see if this works!
+//double test
 
 const PhotoUploadForm = () => {
   const [file, setFile] = useState<File | null>(null);
