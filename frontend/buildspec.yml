@@ -11,10 +11,10 @@ phases:
   build:
     commands:
       - echo Building frontend Docker image...
-      - docker build --build-arg REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com -t knightline/frontend-image .
+      - docker build --build-arg REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com -t frontend-image .
       - echo Tagging the image...
-      - docker tag knightline/frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
+      - docker tag knightline/frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
   post_build:
     commands:
       - echo Pushing image to ECR...
-      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
+      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
