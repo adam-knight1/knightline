@@ -2,7 +2,6 @@ import React from 'react';
 import RegistrationForm from '../components/RegistrationForm';
 import styles from '../styles/Styles.css';
 
-
 const CreateUserPage = () => {
     return (
         <div>

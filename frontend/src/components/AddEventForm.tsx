@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddEventForm = ({ refreshEvents }) => {
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
+const AddEventForm: React.FC<{ refreshEvents: () => void }> = ({ refreshEvents }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [eventTime, setEventTime] = useState('');
     const [location, setLocation] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Ensure the eventTime includes a timezone
@@ -22,7 +24,7 @@ const AddEventForm = ({ refreshEvents }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/calendar/create', newEvent, {
+            const response = await axios.post(`${BACKEND_URL}/calendar/create`, newEvent, { // Will update when deploying
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -30,10 +32,17 @@ const AddEventForm = ({ refreshEvents }) => {
 
             console.log('Event added:', response.data);
             refreshEvents(); // Call the function to refresh events
-            // Optionally reset form fields here
-        } catch (error) {
-            console.error("There was an error adding the event!", error);
-            alert(`Error: ${error.message}`);
+            // Optionally reset form fields here maybe
+        } catch (error: unknown) {
+            // Cast error to an Error object and access message
+            if (error instanceof Error) {
+                console.error("There was an error adding the event!", error);
+                alert(`Error: ${error.message}`);
+            } else {
+                // In case the error is not an instance of Error, handle it accordingly
+                console.error("An unknown error occurred", error);
+                alert('An unknown error occurred');
+            }
         }
     };
 
