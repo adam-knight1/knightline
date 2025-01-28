@@ -2,8 +2,11 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      docker: 20
     commands:
       - echo Installing dependencies...
+      # Add any necessary dependency installation commands here (e.g., apt-get install)
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -18,3 +21,7 @@ phases:
     commands:
       - echo Pushing image to ECR...
       - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
+
+artifacts:
+  files:
+    - '**/*'
