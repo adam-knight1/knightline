@@ -56,15 +56,17 @@ springBoot {
 }
 
 dependencies {
-    implementation platform('io.jsonwebtoken:jjwt-bom:0.11.5') // Dependency alignment for JWT
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'software.amazon.awssdk:s3:2.25.21'
-    implementation 'io.jsonwebtoken:jjwt-api'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
+
+    // JWT dependencies
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
     runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -73,14 +75,3 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.incremental = true
 }
-
-// Enable Gradle dependency locking (optional, ensures stable builds)
-tasks.register("dependencyLock") {
-    doLast {
-        exec {
-            commandLine "./gradlew", "dependencies", "--write-locks"
-        }
-    }
-}
-
-
