@@ -2,9 +2,11 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      docker: 20
     commands:
       - echo Installing dependencies...
-      - apt-get update && apt-get install -y docker.io
+      # Add any necessary dependency installation commands here (e.g., apt-get install)
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -12,17 +14,14 @@ phases:
   build:
     commands:
       - echo Building frontend Docker image...
-      - docker build -t frontend-image .
+      - docker build --build-arg REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com -t knightline/frontend-image .
       - echo Tagging the image...
-      - docker tag frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
-      - echo Building the application...
-      - export REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com
-      - npm run build
+      - docker tag knightline/frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
   post_build:
     commands:
       - echo Pushing image to ECR...
-      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
+      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/frontend-image:latest
 
 artifacts:
   files:
-    - '**/*'  # Include all files for troubleshooting or subsequent steps
+    - '**/*'
