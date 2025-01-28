@@ -8,6 +8,7 @@ public class FamilyUpdateDto {
     private LocalDateTime createdAt;
     public FamilyUpdateDto(){}
 
+
     public FamilyUpdateDto(String body, UserDto user, LocalDateTime createdAt) {
         this.body = body;
         this.user = user;
