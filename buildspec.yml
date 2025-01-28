@@ -4,7 +4,7 @@ phases:
   install:
     commands:
       - echo Installing dependencies...
-      - apt-get update && apt-get install -y docker
+      - apt-get update && apt-get install -y docker.io
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -15,7 +15,7 @@ phases:
       - docker build -t frontend-image .
       - echo Tagging the image...
       - docker tag frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
-      - echo "Setting up environment variables..."
+      - echo Building the application...
       - export REACT_APP_BACKEND_URL=http://KnightFam-2043196611.us-east-1.elb.amazonaws.com
       - npm run build
   post_build:
@@ -26,4 +26,3 @@ phases:
 artifacts:
   files:
     - '**/*'  # Include all files for troubleshooting or subsequent steps
-
