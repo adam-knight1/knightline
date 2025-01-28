@@ -15,6 +15,8 @@ interface Event {
   location: string;
 }
 
+
+//testing
 interface CalendarComponentMethods {
   fetchEvents: () => void;
 }
