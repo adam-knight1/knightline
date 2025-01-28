@@ -1,0 +1,16 @@
+# Ignore dependencies and build artifacts
+.gradle/
+build/
+
+# Ignore frontend directory
+frontend/
+
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore environment variables
+.env
+
+# Ignore logs
+*.log
