@@ -1,0 +1,18 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 913524908137.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Building backend Docker image...
+      - docker build -t backend-image .
+      - echo Tagging the image...
+      - docker tag backend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
+  post_build:
+    commands:
+      - echo Pushing image to ECR...
+      - docker push 913524908137.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
+artifacts:
+  files: '**/*'
