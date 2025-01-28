@@ -6,7 +6,6 @@ public class FamilyUpdateDto {
     private String body;
     private UserDto user;
     private LocalDateTime createdAt;
-
     public FamilyUpdateDto(){}
 
     public FamilyUpdateDto(String body, UserDto user, LocalDateTime createdAt) {
