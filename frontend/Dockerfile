@@ -5,7 +5,7 @@ FROM 913524908137.dkr.ecr.us-east-1.amazonaws.com/base-images/node:18-alpine AS 
 WORKDIR /app
 
 # Copy package.json and package-lock.json for better caching
-COPY frontend/package*.json ./
+COPY package*.json ./
 
 # Build argument and environment variable for backend URL
 ARG REACT_APP_BACKEND_URL
@@ -15,7 +15,7 @@ ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 RUN npm install
 
 # Copy the rest of the app's source code
-COPY frontend/. .
+COPY . .
 
 # Build the Next.js app for production
 RUN npm run build
@@ -34,3 +34,4 @@ EXPOSE 3000
 
 # Start the Next.js server
 CMD ["npm", "start"]
+
