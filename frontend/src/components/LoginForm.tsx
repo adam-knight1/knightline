@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
 /** Login component to handle interaction with spring security framework on the backend
- * Includes labeled inputs for email and password, error handling, and navigation on successful login.
+ * Includes labeled inputs for email and password, error handling, and navigation on successful loginsdds.
  **/
 
 const LoginForm: React.FC = () => {
