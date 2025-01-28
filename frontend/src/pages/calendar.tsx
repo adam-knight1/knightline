@@ -16,7 +16,7 @@ const CalendarPage = () => {
 
   const refreshEvents = () => {
     if (calendarRef.current) {
-      calendarRef.current.fetchEvents(); // Now TypeScript knows about fetchEvents
+      calendarRef.current.fetchEvents(); // Now TypeScript knows about fetchEvents, and also testing this.
     }
   };
 
