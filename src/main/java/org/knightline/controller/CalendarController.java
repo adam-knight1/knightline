@@ -41,6 +41,8 @@ public class CalendarController {
                 calendarEventDto.getEventTime()  // Still a String here
         );
 
+        //testing aws codepipeline - backend
+
         // prepare the response DTO
         CalendarEventDto responseDto = new CalendarEventDto();
         responseDto.setId(newEvent.getId());
