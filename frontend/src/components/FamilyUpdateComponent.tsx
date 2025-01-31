@@ -2,7 +2,7 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
 
 const UpdatesContainer = styled.div`
   display: flex;

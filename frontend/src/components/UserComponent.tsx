@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import fetchProfilePhoto from './FetchProfilePhoto'; // Adjust the import path as necessary
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+
+
 interface User {
   name: string;
 }

@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import './UserPageStyle.css';
 import { useRouter } from 'next/router';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
 
 /** Login component to handle interaction with spring security framework on the backend
  * Includes labeled inputs for email and password, error handling, and navigation on successful loginsdds.

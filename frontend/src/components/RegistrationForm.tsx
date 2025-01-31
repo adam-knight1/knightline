@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';  // Import AxiosError to type the err
 import { useRouter } from 'next/router';
 import styles from './RegistrationForm.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
 
 interface UserData {
   name: string;

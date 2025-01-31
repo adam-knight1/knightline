@@ -10,7 +10,7 @@ interface User {
   imageUrl?: string; // Added optional imageUrl property for the profile picture
 }
 
-const BACKEND_URL = 'http://localhost:8080'; // Updated BACKEND_URL
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
 
 const UserPage = () => {
   const [user, setUser] = useState<User | null>(null);

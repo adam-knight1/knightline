@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';  // Import ReactImageGalleryItem type
+import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import PhotoUploadForm from './PhotoUploadForm'; // Adjust the import path as needed
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
 
 interface Photo extends ReactImageGalleryItem {
   description?: string;
-  original: string; // Ensure 'original' is a string URL or path
-  thumbnail: string; // Ensure 'thumbnail' is a string URL or path
+  original: string;
+  thumbnail: string;
 }
 
 const PageContainer = styled.div`
@@ -77,20 +78,6 @@ const UploadSection = styled.div`
   align-items: center;
 `;
 
-const UploadButton = styled.button`
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #218838;
-  }
-`;
-
 const GalleryContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -117,6 +104,7 @@ const Image = styled.img`
 const PhotoAlbumComponent = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -124,42 +112,44 @@ const PhotoAlbumComponent = () => {
       const authToken = localStorage.getItem('authToken');
       if (!authToken) {
         alert('No auth token found, please log in.');
+        router.push('/login');
         return;
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/photos/get', {  // Another local placeholder pending deployment
+        const response = await axios.get(`${BACKEND_URL}/photos/get`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         });
 
         const photoData: Photo[] = response.data.map((photo: any) => ({
-          original: photo.url,      // Ensure this URL is correct for the full image
-          thumbnail: photo.url,     // Ensure this URL is correct for the thumbnail
+          original: photo.url,
+          thumbnail: photo.url,
           description: `${photo.title || ''} - ${photo.description || ''}`,
         }));
 
         setPhotos(photoData);
-        console.log("Fetched photos: ", photoData);
+        setError(null);
       } catch (error) {
         console.error("There was an error fetching the photos!", error);
+        setError("Failed to fetch photos. Please try again later.");
       }
     };
 
     fetchPhotos();
-  }, []);
+  }, [router]);
 
   return (
     <PageContainer>
       <Header>
         <BackButton onClick={() => router.back()}>Back</BackButton>
         <UploadSection>
-          <input type="file" />
-          <UploadButton>Upload Photo</UploadButton>
+          <PhotoUploadForm />
         </UploadSection>
       </Header>
       <Title>Family Photo Album</Title>
+      {error && <div style={{ color: 'red', textAlign: 'center' }}>{error}</div>}
       <GalleryContainer>
         {photos.map((photo, index) => (
           <ImageWrapper key={index} onClick={() => setSelectedPhotoIndex(index)}>
@@ -183,7 +173,7 @@ const PhotoAlbumComponent = () => {
           }}
         >
           <ImageGallery
-            items={photos}  // Now this is properly typed
+            items={photos}
             startIndex={selectedPhotoIndex}
             onScreenChange={fullScreen => {
               if (!fullScreen) setSelectedPhotoIndex(null);
