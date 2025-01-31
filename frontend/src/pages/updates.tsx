@@ -3,6 +3,8 @@ import axios from 'axios';
 import { MessageList, Input, Button } from 'react-chat-elements';
 import 'react-chat-elements/dist/main.css';
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+
 interface Update {
   position: 'left' | 'right';
   type: 'text';
@@ -18,7 +20,7 @@ const UpdatesPage = () => {
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/updates/retrieve-all'); //will change upon deployment
+        const response = await axios.get('http://${BACKEND_URL}/updates/retrieve-all'); //will change upon deployment
         const transformedUpdates = response.data.map((update: any) => ({
           position: 'right', // Assuming the default position is "right"
           type: 'text', // Assuming updates are all text type
