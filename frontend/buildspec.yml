@@ -15,7 +15,7 @@ phases:
     commands:
       - echo Building frontend Docker image...
       - docker build --platform linux/amd64 \
-        --build-arg REACT_APP_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL \
+        --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
         -t frontend-image frontend/
       - echo Tagging the image...
       - docker tag frontend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
