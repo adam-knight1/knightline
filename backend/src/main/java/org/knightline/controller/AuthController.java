@@ -33,7 +33,7 @@ import java.util.Map;
  */
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000", "https://knightfam.com"}) // Allow both dev and production origins
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;

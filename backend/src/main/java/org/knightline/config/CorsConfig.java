@@ -14,7 +14,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // Applying CORS to all endpoints
-                .allowedOrigins("http://localhost:3000")  // allowing the temporary local frontend origin, can use allowedOriginPatterns later for multi domain
+                .allowedOrigins("http://knightfam.com", "http://localhost:3000")  // allowing the temporary local frontend origin, can use allowedOriginPatterns later for multi domain
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allowing standard methods
                 .allowedHeaders("*")
                 //.allowedHeaders("Authorization", "Content-Type", "X-Requested-With", "Accept")  // Specify only the necessary headers

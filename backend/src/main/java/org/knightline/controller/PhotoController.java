@@ -22,7 +22,7 @@ import java.util.Map;
 //Photo controller class hosting the endpoints for various photo related operations
 //Centered around uploading photos into the family album or profile picture functions
 @RestController
-@RequestMapping("/photos")
+@RequestMapping("/api/photos")
 public class PhotoController {
     @Autowired
     private final PhotoService photoService;

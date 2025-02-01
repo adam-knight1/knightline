@@ -20,7 +20,7 @@ import java.util.List;
  * These are displayed on a separate page off of the landing page with user and timestamps.
  */
 @RestController
-@RequestMapping("/updates")
+@RequestMapping("/api/updates")
 public class FamilyUpdateController {
     @Autowired
     private final FamilyUpdateService familyUpdateService;

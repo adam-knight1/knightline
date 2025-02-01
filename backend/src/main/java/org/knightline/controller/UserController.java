@@ -20,7 +20,7 @@ import java.util.UUID;
  * Will add more like deleting, updating etc. once MVP is finished
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
