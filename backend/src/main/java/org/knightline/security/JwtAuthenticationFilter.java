@@ -35,14 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        String requestURI = request.getRequestURI();
-        // Bypass JWT authentication for actuator endpoints for now, may need to add my auth
-        // todo
-        if (requestURI.startsWith("/actuator")) {
-            chain.doFilter(request, response);
-            return;
-        }
-
         final String authorizationHeader = request.getHeader("Authorization");
 
         String username = null;
