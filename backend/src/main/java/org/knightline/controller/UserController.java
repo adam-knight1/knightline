@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-
 /**
  * Handles the endpoints for user operations, such as create user.
  * Will add more like deleting, updating etc. once MVP is finished
@@ -24,7 +23,6 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;

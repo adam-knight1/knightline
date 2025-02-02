@@ -28,7 +28,6 @@ import java.util.Arrays;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
-
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -50,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/auth/**", "/users/**", "/updates/**","/actuator/health").permitAll()
+                .antMatchers("/auth/**", "/users/**", "/updates/**").permitAll()
                 .antMatchers("/calendar/**", "/photos/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
@@ -63,7 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
    @Bean
    public CorsConfigurationSource corsConfigurationSource() {
