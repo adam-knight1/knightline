@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-      NEXT_PUBLIC_BACKEND_URL: "http://knightfam.com/api"
+      NEXT_PUBLIC_BACKEND_URL: "http://knightfam.com"
 
 phases:
   pre_build:

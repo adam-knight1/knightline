@@ -11,7 +11,7 @@ phases:
   build:
     commands:
       - echo Building backend Docker image...
-      # IMPORTANT: point to the Dockerfile in `backend/` and use that folder as the build context
+      # IMPORTANT: pointing to the Dockerfile in `backend/` and use that folder as the build context
       - docker build --platform linux/amd64 -t backend-image -f backend/Dockerfile ./backend
       - echo Tagging the image...
       - docker tag backend-image:latest 913524908137.dkr.ecr.us-east-1.amazonaws.com/knightline/backend-image:latest

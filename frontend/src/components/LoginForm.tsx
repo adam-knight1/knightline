@@ -19,7 +19,7 @@ const LoginForm: React.FC = () => {
     event.preventDefault(); // Preventing default form submission
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/auth/login`, { email, password }); // Local placeholder
+      const response = await axios.post(`${BACKEND_URL}/auth/login`, { email, password });
       console.log('Login successful:', response.data);
 
       const token = response.data.token;
