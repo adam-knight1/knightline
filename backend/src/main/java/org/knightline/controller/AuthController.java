@@ -32,7 +32,6 @@ import java.util.Map;
  * Controller class that defines the endpoints needed for login using spring security"
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "https://knightfam.com"}) // Allow both dev and production origins
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
