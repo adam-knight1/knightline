@@ -8,6 +8,7 @@ import org.knightline.repository.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class PhotoService {
 
     private static final Logger log = LoggerFactory.getLogger(PhotoService.class);
     private final UserService userService;
+    @Value("${aws.s3.bucket}") //adding these two abstract s3 details out of hard code
+    private String bucketName;
+    @Value("${aws.s3.region}")
+    private String region;
 
     public PhotoService(S3Client s3Client,PhotoRepository photoRepository,UserService userService){
         this.s3Client = s3Client;
@@ -39,9 +44,7 @@ public class PhotoService {
 
     public String uploadPhoto(MultipartFile file, String email) throws IOException { //todo revisit this is and
         System.out.println("Reached service");
-        String bucketName = "knightfamphotos";
         String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
-        String region = "us-east-1";
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder() //creating the putObject Request
                 .bucket(bucketName)
@@ -92,12 +95,9 @@ public class PhotoService {
 
         System.out.println("reached profile service here");
 
-        String bucketName = "knightfamphotos";
         //String directoryPrefix = "profile-pictures/"; // Specific directory for profile pictures //todo this is working as is with these two lines commented out
         //String s3Key = directoryPrefix + generateUniqueKey(file.getOriginalFilename(), email);
         String s3Key = generateUniqueKey(file.getOriginalFilename(), email);
-
-        String region = "us-east-1";
 
         log.info("Generated S3 key: {}", s3Key);
 
@@ -146,8 +146,6 @@ public class PhotoService {
         log.info("Completed uploadProfilePicture method");
         return profilePicUrl;
     }
-
-
 
     private String generateUniqueKey(String originalFilename, String username){
         String fileExtension = StringUtils.getFilenameExtension(originalFilename);
